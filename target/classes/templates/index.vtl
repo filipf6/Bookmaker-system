@@ -1,0 +1,18 @@
+#if($user) 
+	Jestes zalogowany jako $user.getLogin() <br>
+	<a href=logout> Wyloguj</a>
+#else
+	<form action='/login' method="post">
+			<div>
+				<label for="login">Login</label>
+				<input id="login" name="login" type="text">
+			</div>
+			<div>
+				<label for="password">Haslo</label>
+				<input id="password" name="password" type="text">
+			</div>
+			<button type="submit" class="btn">Zaloguj</button>
+	</form>
+	<a href=register>Zarejestruj sie</a>
+#end
+

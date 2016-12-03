@@ -1,0 +1,5 @@
+#if($usernameError && $emailError) Podany login i e-mail istnieja juz w bazie <br>
+#elseif($usernameError) Ten login jest zajety <br>
+#elseif($emailError) Podany e-mail istnieje juz w bazie <br>
+#end
+<a href=register> Sprobuj ponownie</a>
