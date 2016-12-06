@@ -58,7 +58,7 @@ public class Main {
 			{
 				request.session().attribute("user",person);
 				model.put("name", request.queryParams("name"));
-				model.put("template", "templates/welcome.vtl");
+				model.put("template", "templates/welcome.vtl"); //tutej welcome
 			}
 			
 			
@@ -78,12 +78,14 @@ public class Main {
 			else
 			{
 				request.session().attribute("user",person);
-				model.put("name", request.queryParams("login"));
-				model.put("template", "templates/welcome.vtl");
+				//model.put("name", request.queryParams("login"));
+				model.put("user", request.session().attribute("user"));
+				model.put("template", "templates/index.vtl"); //tutej welcome
 			}
 
 			return new ModelAndView(model,layout);
 		},new VelocityTemplateEngine());
+		
 		
 		get("/logout", (request, response) -> {
 			Map<String,Object>model=new HashMap<String, Object>();
