@@ -1,4 +1,3 @@
-<h1>Serwis bukmachersko-erotyczny</h1>
 #if($user) 
 	Jestes zalogowany jako $user.getLogin() <br>
 	<a href=logout> Wyloguj</a>
@@ -17,5 +16,14 @@
 	<a href=register>Zarejestruj sie</a>
 #end
 <br><br>
-<a href=today>Dzis</a> <a href=tomorrow>Jutro</a> <a href=overmorrow>Pojutrze</a>
+
+<form action='/' method="get">
+  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
+  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
+  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
+</form>
+
+
+
+
 

@@ -28,7 +28,12 @@ public class Main {
 		String layout="templates/layout.vtl";
 		
 		get("/", (request, response) -> {
+			
 			Map<String,Object>model=new HashMap<String, Object>();
+			
+			String day=request.queryParams("day");
+			System.out.println(day);
+			
 			model.put("user", request.session().attribute("user"));
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model,layout);

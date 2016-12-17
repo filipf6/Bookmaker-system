@@ -6,18 +6,28 @@ public class Match
 {
 	private Date matchDate;
 	private int matchWeek;
-	private int hostGoals;
-	private int guestGoals;
 	private Club host;
 	private Club guest;
 	
-	public Match(Date matchDate, int matchWeek, int hostGoals, int guestGoals, Club host, Club guest)
+	private int hostGoals;
+	private int guestGoals;
+	
+	public Match(Date matchDate, int matchWeek, Club host, Club guest, int hostGoals, int guestGoals)
 	{
 		super();
 		this.matchDate = matchDate;
 		this.matchWeek = matchWeek;
+		this.host = host;
+		this.guest = guest;
 		this.hostGoals = hostGoals;
 		this.guestGoals = guestGoals;
+	}
+	
+	public Match(Date matchDate, int matchWeek, Club host, Club guest)
+	{
+		super();
+		this.matchDate = matchDate;
+		this.matchWeek = matchWeek;
 		this.host = host;
 		this.guest = guest;
 	}
