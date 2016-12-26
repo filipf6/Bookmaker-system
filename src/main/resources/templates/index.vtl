@@ -16,12 +16,57 @@
 	<a href=register>Zarejestruj sie</a>
 #end
 <br><br>
+#if($day)
+	#if($day=="today")
+	<form action='/' method="get">
+	  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
+	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
+	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
+	</form>
+	#elseif($day=="tomorrow")
+	<form action='/' method="get">
+	  <input onChange="this.form.submit();" name="day" value="today" type="radio"> Dzis
+	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio" checked> Jutro
+	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
+	</form>
+	#elseif($day=="overmorrow")
+	<form action='/' method="get">
+	  <input onChange="this.form.submit();" name="day" value="today" type="radio"> Dzis
+	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
+	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio" checked> Pojutrze
+	</form>
+	#end
+#else
+	<form action='/' method="get">
+	  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
+	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
+	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
+	</form>
+#end
 
-<form action='/' method="get">
-  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
-  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
-  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
-</form>
+#if($matches)
+	<div class="container">
+		<div class="row">
+			<div class="col-md-1 col-md-offset-6">1</div><div class="col-md-1">X</div><div class="col-md-1">2</div>
+		</div>
+		#foreach($match in $matches)
+			<div class="row">
+					<div class="col-md-1">$match.getMatchHour()</div> 
+					<div class="col-md-2">$match.getHost().getName()</div>
+					<div class="col-md-1">:</div>
+					<div class="col-md-2">$match.getGuest().getName()</div>
+					<div class="col-md-1">$match.getHostWillWinCourse()</div> 
+					<div class="col-md-1">$match.getDrawCourse()</div> 
+					<div class="col-md-1">$match.getGuestWillWinCourse()</div>
+			</div>
+		#end
+	</div>
+#else
+	W tym dniu nie ma zadnych meczy	
+#end
+
+
+
 
 
 

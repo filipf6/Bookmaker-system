@@ -84,51 +84,6 @@ public class User
 				+ surname + "]";
 	}
 
-	public ArrayList<String> register() throws SQLException
-	{
-		ArrayList<String> errors = new ArrayList<String>();
-		
-		
-
-        ResultSet rs = DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where login = '"+login+"'");
-
-        if(rs.next()) errors.add("usernameError");
-        
-        rs = DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where e_mail = '"+email+"'");
-
-        if(rs.next()) errors.add("emailError");
-
-
-        if(errors.isEmpty())
-        {	
-            DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (SEQ_ID.NEXTVAL,'"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"')");
-        }
-
-		
-		return errors;
-	}
-
 	
-	public static User LogIn(String login, String password) throws SQLException
-	{
-		ResultSet rs = DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where haslo = '"+password+"' and login = '"+login+"'");
-		if(!(rs.next())) return null;
-		else
-		{	
-			String name="",surname="",email="";
-		
-			rs=DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where haslo = '"+password+"' and login = '"+login+"'");
-			
-			while(rs.next())
-			{
-				
-				name = rs.getString(2);
-				surname = rs.getString(3);
-				email = rs.getString(6);
-			}
-			
-			return new User(login, password,email,name,surname);
-		}
-	}
 	
 }

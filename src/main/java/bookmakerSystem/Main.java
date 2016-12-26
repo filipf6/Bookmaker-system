@@ -5,15 +5,19 @@ import static spark.Spark.post;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 //import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
+import bookmakerSystem.DAO.*;
+import bookmakerSystem.model.*;
+
 
 import bookmakerSystem.model.User;
-//import bookmakerSystem.model.Uzytkownik;
+import bookmakerSystem.service.MatchService;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -28,12 +32,12 @@ public class Main {
 		String layout="templates/layout.vtl";
 		
 		get("/", (request, response) -> {
-			
 			Map<String,Object>model=new HashMap<String, Object>();
-			
+						
 			String day=request.queryParams("day");
-			System.out.println(day);
+			MatchService.matchesToVTL(day, model);
 			
+			model.put("day", day); 
 			model.put("user", request.session().attribute("user"));
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model,layout);
@@ -50,23 +54,29 @@ public class Main {
 		post("/welcome",(request,response)->{
 			Map<String, Object>model=new HashMap<String, Object>();
 			
-			User person=new User(request.queryParams("login"),request.queryParams("password"),request.queryParams("email"),request.queryParams("name"), request.queryParams("surname"));
-			List<String> errors =person.register();
-			if (!errors.isEmpty()) {
-				for(String error:errors)
-				{
-					model.put(error, error);
-				}
-				model.put("template", "templates/error.vtl");
+			ArrayList<String>errors=new ArrayList<String>();
+			
+			String login=request.queryParams("login");
+			String password=request.queryParams("password");
+			String repeatedPassword=request.queryParams("password2");
+			String email=request.queryParams("email");
+			String name=request.queryParams("name");
+			String surname=request.queryParams("surname");
+			
+			errors=UserDAO.getRegistrationErrors(login, password, repeatedPassword, email, name, surname);
+			
+			if(errors.isEmpty())
+			{
+				User person=UserDAO.register(login, password, email, name, surname);
+				request.session().attribute("user",person);
+				model.put("name", name);
+				model.put("template", "templates/welcome.vtl");
 			}
 			else
 			{
-				request.session().attribute("user",person);
-				model.put("name", request.queryParams("name"));
-				model.put("template", "templates/welcome.vtl"); //tutej welcome
+				model.put("errors", errors);
+				model.put("template", "templates/error.vtl");
 			}
-			
-			
 			return new ModelAndView(model,layout);
 		},new VelocityTemplateEngine());
 		
@@ -75,10 +85,14 @@ public class Main {
 			
 			String login=request.queryParams("login");
 			String password=request.queryParams("password");
-			User person= User.LogIn(login, password);
+			User person= UserDAO.LogIn(login, password);
+			
+			String day=request.queryParams("day");
+			MatchService.matchesToVTL(day, model);
+			
 			if(person==null)
 			{
-				model.put("template", "templates/loggingError.vtl");
+				model.put("template", "templates/logingError.vtl");
 			}
 			else
 			{
@@ -96,6 +110,8 @@ public class Main {
 			Map<String,Object>model=new HashMap<String, Object>();
 			request.session().removeAttribute("user");
 			model.put("user", request.session().attribute("user"));
+			String day=request.queryParams("day");
+			MatchService.matchesToVTL(day, model);
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model,layout);
 			

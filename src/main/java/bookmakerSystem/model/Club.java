@@ -1,18 +1,18 @@
 package bookmakerSystem.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Club
 {
 	private String name;
-	private Date establishmentDay;
+	private LocalDate establishmentDate;
 	private String stadiumName;
 	
-	public Club(String name, Date establishmentDay, String stadiumName)
+	public Club(String name, LocalDate establishmentDate, String stadiumName)
 	{
 		super();
 		this.name = name;
-		this.establishmentDay = establishmentDay;
+		this.establishmentDate = establishmentDate;
 		this.stadiumName = stadiumName;
 	}
 	public String getName()
@@ -23,13 +23,13 @@ public class Club
 	{
 		this.name = name;
 	}
-	public Date getEstablishmentDay()
+	public LocalDate getestablishmentDate()
 	{
-		return establishmentDay;
+		return establishmentDate;
 	}
-	public void setEstablishmentDay(Date establishmentDay)
+	public void setestablishmentDate(LocalDate establishmentDate)
 	{
-		this.establishmentDay = establishmentDay;
+		this.establishmentDate = establishmentDate;
 	}
 	public String getStadiumName()
 	{
@@ -39,6 +39,12 @@ public class Club
 	{
 		this.stadiumName = stadiumName;
 	}
+	@Override
+	public String toString()
+	{
+		return "Club [name=" + name + ", establishmentDate=" + establishmentDate + ", stadiumName=" + stadiumName + "]";
+	}
+	
 	
 	
 	
