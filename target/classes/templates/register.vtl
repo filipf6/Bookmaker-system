@@ -1,4 +1,4 @@
-<form action='/welcome' method="post">
+<form action='/register' method="post">
 		<div>
 			<label for="login">Login</label>
 			<input id="login" name="login" type="text">
@@ -25,3 +25,15 @@
 		</div>
 		<button type="submit" class="btn">Zarejestruj</button>
 </form>
+<br>
+<ul>
+	#foreach($error in $errors)
+		<div class="row">
+			<div class="col-md-4">
+				<div class="alert alert-danger">
+					<li>$error</li>
+				</div>
+			</div>
+		</div>	
+	#end
+</ul>
