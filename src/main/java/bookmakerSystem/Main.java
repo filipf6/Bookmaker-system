@@ -83,34 +83,6 @@ public class Main {
 			return new ModelAndView(model,layout);
 		},new VelocityTemplateEngine());
 		
-		/*post("/welcome",(request,response)->{
-			Map<String, Object>model=new HashMap<String, Object>();
-			
-			ArrayList<String>errors=new ArrayList<String>();
-			
-			String login=request.queryParams("login");
-			String password=request.queryParams("password");
-			String repeatedPassword=request.queryParams("password2");
-			String email=request.queryParams("email");
-			String name=request.queryParams("name");
-			String surname=request.queryParams("surname");
-			
-			errors=UserDAO.getRegistrationErrors(login, password, repeatedPassword, email, name, surname);
-			
-			if(errors.isEmpty())
-			{
-				User person=UserDAO.register(login, password, email, name, surname);
-				request.session().attribute("user",person);
-				model.put("name", name);
-				model.put("template", "templates/welcome.vtl");
-			}
-			else
-			{
-				model.put("errors", errors);
-				model.put("template", "templates/error.vtl");
-			}
-			return new ModelAndView(model,layout);
-		},new VelocityTemplateEngine());*/
 		
 		post("/login",(request,response)->{
 			Map<String, Object>model=new HashMap<String, Object>();
