@@ -3,6 +3,8 @@ package bookmakerSystem.DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import bookmakerSystem.DatabaseConnector;
 import bookmakerSystem.model.User;
@@ -12,10 +14,11 @@ public class UserDAO
 	public static User LogIn(String login, String password) throws SQLException
 	{
 		ResultSet rs = DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where haslo = '"+password+"' and login = '"+login+"'");
-		if(!(rs.next())) return null;
+		if(!(rs.next())) 
+			return null;
 		else
 		{	
-			String name="",surname="",email="";
+			String name="", surname="", email="";
 		
 			rs=DatabaseConnector.getResultStatement("select * from UZYTKOWNIK where haslo = '"+password+"' and login = '"+login+"'");
 			
@@ -31,33 +34,45 @@ public class UserDAO
 		}
 	}
 	
-	public static ArrayList<String> getRegistrationErrors(String login, String password, String repeatedPassword, String email, String name, String surname) throws SQLException
+	public static Map<String, String> getRegistrationErrors(String login, String password, String repeatedPassword, String email, String name, String surname) throws SQLException
 	{
-		ArrayList<String>errors=new ArrayList<String>();
-		if(!password.equals(repeatedPassword))
-		{
-			errors.add("Podane hasla sie nie zgadzaja");
-		}
-		else
-		{
-			if(password.length()<6) errors.add("Haslo za krotkie- powinno zawierac minimum 6 znakow");
-		}
-		if(login.length()<3) 
-			errors.add("Login za krotki-powinien zawierac minimum 3 znaki");
-		if(!email.contains("@") || !(email.indexOf("@")==email.lastIndexOf("@")) || !email.contains(".") || !(email.lastIndexOf(".")>email.indexOf("@"))) 
-			errors.add("E-mail niepoprawny");
+		Map<String, String> errors = new HashMap<String, String>();
 		
-		ResultSet rs = DatabaseConnector.getResultStatement("select id_uzytkownika from UZYTKOWNIK where login = '"+login+"'");
-
-        if(rs.next()) errors.add("Podany login jest juz zajety");
-        
-        rs = DatabaseConnector.getResultStatement("select id_uzytkownika from UZYTKOWNIK where e_mail = '"+email+"'");
-
-        if(rs.next()) errors.add("Uzytkownik o podanym adresie e-mail istnieje juz w bazie");
+		ResultSet rs = DatabaseConnector.getResultStatement("SELECT "
+				+ "ID_UZYTKOWNIKA FROM UZYTKOWNIK WHERE LOGIN = '"+login+"'");
+		if(rs.next())
+			errors.put("loginError", "Podany login jest zajety");
+		else if(login==null || login.equals(""))
+			errors.put("loginError", "Pole login nie moze byc puste");
+		else if(login.length()<4)
+			errors.put("loginError", "Podany login jest za krotki - musi zawierac przynajmniej 4 znaki");
+		else if(!login.matches("[a-zA-Z0-9]{4,}"))
+			errors.put("loginError", "Login moze sie skadac z wielkich i malych liter oraz z cyfr od 0-9");
+		
+		if(password==null || password.equals(""))
+			errors.put("passwordError", "Pole haslo nie moze byc puste");
+		else if(password.length()<6)
+			errors.put("passwordError", "Podane haslo jest za krotkie - musi zawierac przynajmniej 6 znakow");
+		else if(!password.matches("[a-zA-Z0-9]{6,}"))
+			errors.put("passwordError", "Haslo moze sie skadac z wielkich i malych liter oraz z cyfr od 0-9");
+		else if(!password.equals(repeatedPassword))
+			errors.put("repeatedPasswordError", "Podane hasla sie nie zgadzaja");
+		
+		rs = DatabaseConnector.getResultStatement("SELECT "
+				+ "ID_UZYTKOWNIKA FROM UZYTKOWNIK WHERE E_MAIL = '"+email+"'");
+		if(rs.next())
+			errors.put("emailError", "Uzytkownik o podanym adresie e-mail juz istnieje");
+		else if(email==null || "".equals(email))
+			errors.put("emailError", "Pole e-mail nie moze byc puste");
+		else if(!email.matches("[a-zA-Z0-9_\\-]+@[a-zA-Z]+\\.[a-zA-Z]+"))
+			errors.put("emailError", "Podany adres e-mail jest niepoprawny");
+		if(name==null || name.equals(""))
+			errors.put("nameError", "Pole imie nie moze byc puste");
+		if(surname==null || surname.equals(""))
+			errors.put("surnameError", "Pole nazwisko nie moze byc puste");
 		
 		return errors;
 	}
-	
 	
 	public static User register(String login, String password, String email, String name, String surname)
 	{

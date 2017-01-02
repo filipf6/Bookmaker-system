@@ -16,7 +16,7 @@ public class DatabaseConnector
 	
 			  System.out.println("Sterowniki za³adowane");
 			  
-			  connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:Stachudb","filip","filip");
+			  connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","system","q1w2");
 			  
 			  System.out.println("Po³¹czenie nawi¹zane");
 			

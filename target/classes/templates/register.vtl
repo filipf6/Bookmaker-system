@@ -2,38 +2,44 @@
 		<div>
 			<label for="login">Login</label>
 			<input id="login" name="login" type="text">
+			#if($loginError)
+				$loginError
+			#end
 		</div>
 		<div>
 			<label for="password">Haslo</label>
 			<input id="password" name="password" type="password">
+			#if($passwordError)
+				$passwordError
+			#end
 		</div>
 		<div>
 			<label for="password2">Powtorz haslo</label>
 			<input id="password2" name="password2" type="password">
+			#if($repeatedPasswordError)
+				$repeatedPasswordError
+			#end
 		</div>
 		<div>
 			<label for="email">E-mail</label>
 			<input id="email" name="email" type="text">
+			#if($emailError)
+				$emailError
+			#end
 		</div>
 		<div>
 			<label for="name">Imie</label>
 			<input id="name" name="name" type="text">
+			#if($nameError)
+				$nameError
+			#end
 		</div>
 		<div>
 			<label for="surname">Nazwisko</label>
-			<input id="surname" name="surname" type="text">
+			<input id="surname"  name="surname" type="text">
+			#if($surnameError)
+				$surnameError
+			#end
 		</div>
 		<button type="submit" class="btn">Zarejestruj</button>
 </form>
-<br>
-<ul>
-	#foreach($error in $errors)
-		<div class="row">
-			<div class="col-md-4">
-				<div class="alert alert-danger">
-					<li>$error</li>
-				</div>
-			</div>
-		</div>	
-	#end
-</ul>
