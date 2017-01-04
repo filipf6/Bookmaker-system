@@ -27,7 +27,7 @@ public class Main
 		//Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		//timeStamp.toLocalDateTime().toLocalDate();
 		//localDate.getHour
-		
+		// kolejny komentarz
 		get("/", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
