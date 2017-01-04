@@ -6,10 +6,11 @@ public class TheWinnerOfAMatchBet extends Bet
 {
 	private int hostResult;
 	
-	public TheWinnerOfAMatchBet(float course, boolean settlement, LocalDate settlementDate)
+	public TheWinnerOfAMatchBet(float course, boolean settlement, 
+			LocalDate settlementDate, int hostResult)
 	{
-		super(course, settlement, settlementDate);
-		// TODO Auto-generated constructor stub
+		super(hostResult, course, settlement, settlementDate);
+		this.hostResult = hostResult;
 	}
 	
 	

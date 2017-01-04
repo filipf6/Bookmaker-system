@@ -4,13 +4,14 @@ import java.time.LocalDate;
 
 public abstract class Bet
 {
+	private int id;
 	private float course;
 	private boolean settlement; 
 	private LocalDate settlementDate;
 	
-	public Bet(float course, boolean settlement, LocalDate settlementDate)
+	public Bet( int id, float course, boolean settlement, LocalDate settlementDate)
 	{
-		super();
+		this.id = id;
 		this.course = course;
 		this.settlement = settlement;
 		this.settlementDate = settlementDate;
