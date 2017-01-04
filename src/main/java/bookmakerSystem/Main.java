@@ -27,7 +27,7 @@ public class Main
 		//Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		//timeStamp.toLocalDateTime().toLocalDate();
 		//localDate.getHour
-
+		//jshfakufg
 		get("/", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -42,6 +42,7 @@ public class Main
 			Map<String, Object> model = new HashMap<String, Object>();
 			Map<String, String> errors = new HashMap();
 			UserDAO userDAO = new UserDAO();
+			
 			
 			String login = request.queryParams("login");
 			String password = request.queryParams("password");

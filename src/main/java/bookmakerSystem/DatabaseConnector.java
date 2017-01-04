@@ -5,6 +5,7 @@ import java.sql.*;
 public class DatabaseConnector
 {
 	
+	//kjhdkh
 	private static Connection connection;
 	
 	static public void connectWithBase()
