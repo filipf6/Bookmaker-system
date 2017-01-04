@@ -8,27 +8,21 @@ import bookmakerSystem.DatabaseConnector;
 
 public class User
 {
+	private final int id;
 	private final String login;
 	private String password;
 	private String email;
 	private String name;
 	private String surname;
 	
-	public User(String login, String password, String email, String name, String surname)
+	public User(int id, String login, String password, String email, String name, String surname)
 	{
-		super();
+		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
-	}
-
-	public User(String login, String password)
-	{
-		this.login=login;
-		this.password=password;
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getPassword()
