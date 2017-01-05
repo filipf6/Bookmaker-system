@@ -1,5 +1,6 @@
 package bookmakerSystem.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public abstract class Bet
@@ -9,7 +10,7 @@ public abstract class Bet
 	private boolean settlement; 
 	private LocalDate settlementDate;
 	
-	public Bet( int id, float course, boolean settlement, LocalDate settlementDate)
+	public Bet( int id, float course, boolean settlement, Timestamp settlementDate)
 	{
 		this.id = id;
 		this.course = course;

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseConnector
 {
-	
+
 	private static Connection connection;
 	
 	static public void connectWithBase()

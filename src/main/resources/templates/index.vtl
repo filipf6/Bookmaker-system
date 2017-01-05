@@ -1,5 +1,5 @@
 #if($user) 
-	Jestes zalogowany jako $user.getLogin() <br>
+	Jestes zalogowany jako $user<br>
 	<a href=logout> Wyloguj</a>
 #else
 	<form action='/login' method="post">
@@ -16,73 +16,6 @@
 	<form action='/register' method="post">
 		<button class="btn btn-link">Zarejestruj sie</button>
 	</form>
-#end
-
-<br>
-
-#if($day)
-	#if($day=="today")
-	<form action='/' method="get">
-	  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
-	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
-	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
-	</form>
-	#elseif($day=="tomorrow")
-	<form action='/' method="get">
-	  <input onChange="this.form.submit();" name="day" value="today" type="radio"> Dzis
-	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio" checked> Jutro
-	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
-	</form>
-	#elseif($day=="overmorrow")
-	<form action='/' method="get">
-	  <input onChange="this.form.submit();" name="day" value="today" type="radio"> Dzis
-	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
-	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio" checked> Pojutrze
-	</form>
-	#end
-#else
-	<form action='/' method="get">
-	  <input onChange="this.form.submit();" name="day" value="today" type="radio" checked> Dzis
-	  <input onChange="this.form.submit();" name="day" value="tomorrow" type="radio"> Jutro
-	  <input onChange="this.form.submit();" name="day" value="overmorrow" type="radio"> Pojutrze
-	</form>
-#end
-
-#if($matches)
-	<div class="container">
-		
-		<div class="col-md-6">
-			
-			<table class="table table-hover">
-				<thead>
-			      <tr>
-			        <th></th>
-			        <th></th>
-			        <th></th>
-			        <th></th>
-			        <th>1</th>
-			        <th>X</th>
-			        <th>2</th>
-			      </tr>
-			    </thead>
-			    <tbody>
-					#foreach($match in $matches)
-						<tr>
-				        	<td>$match.getMatchHour()</td>
-				        	<td>$match.getHost().getName()</td>
-				        	<td>:</td>
-							<td>$match.getGuest().getName()</td>
-							<td>$match.getHostWillWinCourse()</td>
-							<td>$match.getDrawCourse()</td>
-							<td>$match.getGuestWillWinCourse()</td>
-				      	</tr>
-					#end
-			    </tbody>
-		  </table>
-	  </div>
-	</div>
-#else
-	W tym dniu nie ma zadnych meczy	
 #end
 
 
