@@ -8,9 +8,9 @@ public abstract class Bet
 	private int id;
 	private float course;
 	private boolean settlement; 
-	private LocalDate settlementDate;
+	private Timestamp settlementDate;
 	
-	public Bet( int id, float course, boolean settlement, Timestamp settlementDate)
+	public Bet(int id, float course, boolean settlement, Timestamp settlementDate)
 	{
 		this.id = id;
 		this.course = course;
@@ -34,11 +34,11 @@ public abstract class Bet
 	{
 		this.settlement = settlement;
 	}
-	public LocalDate getSettlementDate()
+	public Timestamp getSettlementDate()
 	{
 		return settlementDate;
 	}
-	public void setSettlementDate(LocalDate settlementDate)
+	public void setSettlementDate(Timestamp settlementDate)
 	{
 		this.settlementDate = settlementDate;
 	}
