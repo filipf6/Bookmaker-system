@@ -1,47 +1,59 @@
 package bookmakerSystem.model;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
 public abstract class Bet
 {
 	private int id;
 	private float course;
-	private boolean settlement; 
-	private LocalDate settlementDate;
+	private Boolean settlement;
+	Match match;
 	
-	public Bet( int id, float course, boolean settlement, Timestamp settlementDate)
+	public Bet(int id, float course, Boolean settlement)
 	{
 		this.id = id;
 		this.course = course;
 		this.settlement = settlement;
-		this.settlementDate = settlementDate;
 	}
-	
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
 	public float getCourse()
 	{
 		return course;
 	}
+
 	public void setCourse(float course)
 	{
 		this.course = course;
 	}
-	public boolean isSettlement()
+
+	public Boolean getSettlement()
 	{
 		return settlement;
 	}
-	public void setSettlement(boolean settlement)
+
+	public void setSettlement(Boolean settlement)
 	{
 		this.settlement = settlement;
 	}
-	public LocalDate getSettlementDate()
+
+	public Match getMatch()
 	{
-		return settlementDate;
+		return match;
 	}
-	public void setSettlementDate(LocalDate settlementDate)
+
+	public void setMatch(Match match)
 	{
-		this.settlementDate = settlementDate;
+		this.match = match;
 	}
-	
 	
 }

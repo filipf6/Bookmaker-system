@@ -1,85 +1,82 @@
 package bookmakerSystem.model;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+import bookmakerSystem.DAO.TheWinnerOfAMatchBetDAO;
 
 public class Match
 {
-	private LocalDate matchDate;
-	private String matchHour;
-	private int matchWeek;
+	private int id;
+	private Timestamp matchDate;
+	private int round;
 	private Club host;
 	private Club guest;
-	private float hostWillWinCourse;
-	private float drawCourse;
-	private float guestWillWinCourse;
-	
-	private int hostGoals;
-	private int guestGoals;
-	
-	
+	private Integer hostGoals;
+	private Integer guestGoals;
+	private ArrayList<TheWinnerOfAMatchBet> theWinnerOfAMatchBets;
 
-	public Match(LocalDate matchDate, String matchHour, int matchWeek, Club host, Club guest, float hostWillWinCourse,
-			float drawCourse, float guestWillWinCourse, int hostGoals, int guestGoals)
+	public Match(int id, Timestamp matchDate, int round, Club host, Club guest, Integer hostGoals,
+			Integer guestGoals, ArrayList<TheWinnerOfAMatchBet> theWinnerOfAMatchBets)
 	{
-		super();
+		this.id = id;
 		this.matchDate = matchDate;
-		this.matchHour = matchHour;
-		this.matchWeek = matchWeek;
+		this.round = round;
 		this.host = host;
 		this.guest = guest;
-		this.hostWillWinCourse = hostWillWinCourse;
-		this.drawCourse = drawCourse;
-		this.guestWillWinCourse = guestWillWinCourse;
 		this.hostGoals = hostGoals;
 		this.guestGoals = guestGoals;
+		this.theWinnerOfAMatchBets = theWinnerOfAMatchBets;
 	}
-	
-	
 
-	public Match(LocalDate matchDate, String matchHour, int matchWeek, Club host, Club guest, float hostWillWinCourse,
-			float drawCourse, float guestWillWinCourse)
+	public int getId()
 	{
-		super();
-		this.matchDate = matchDate;
-		this.matchHour = matchHour;
-		this.matchWeek = matchWeek;
-		this.host = host;
-		this.guest = guest;
-		this.hostWillWinCourse = hostWillWinCourse;
-		this.drawCourse = drawCourse;
-		this.guestWillWinCourse = guestWillWinCourse;
+		return id;
 	}
 
+	public void setId(int id)
+	{
+		this.id = id;
+	}
 
-
-	public LocalDate getMatchDate()
+	public Timestamp getMatchDate()
 	{
 		return matchDate;
 	}
 
-	public void setMatchDate(LocalDate matchDate)
+	public void setMatchDate(Timestamp matchDate)
 	{
 		this.matchDate = matchDate;
 	}
 
-	public String getMatchHour()
+	public int getRound()
 	{
-		return matchHour;
+		return round;
 	}
 
-	public void setMatchHour(String matchHour)
+	public void setRound(int round)
 	{
-		this.matchHour = matchHour;
+		this.round = round;
 	}
 
-	public int getMatchWeek()
+	public Club getHost()
 	{
-		return matchWeek;
+		return host;
 	}
 
-	public void setMatchWeek(int matchWeek)
+	public void setHost(Club host)
 	{
-		this.matchWeek = matchWeek;
+		this.host = host;
+	}
+
+	public Club getGuest()
+	{
+		return guest;
+	}
+
+	public void setGuest(Club guest)
+	{
+		this.guest = guest;
 	}
 
 	public int getHostGoals()
@@ -102,66 +99,15 @@ public class Match
 		this.guestGoals = guestGoals;
 	}
 
-	public Club getHost()
+	public ArrayList<TheWinnerOfAMatchBet> getTheWinnerOfAMatchBets()
 	{
-		return host;
+		return theWinnerOfAMatchBets;
 	}
 
-	public void setHost(Club host)
+	public void setTheWinnerOfAMatchBets(ArrayList<TheWinnerOfAMatchBet> theWinnerOfAMatchBets)
 	{
-		this.host = host;
+		this.theWinnerOfAMatchBets = theWinnerOfAMatchBets;
 	}
 
-	public Club getGuest()
-	{
-		return guest;
-	}
-
-	public void setGuest(Club guest)
-	{
-		this.guest = guest;
-	}
-	
-	
-	public float getHostWillWinCourse()
-	{
-		return hostWillWinCourse;
-	}
-
-	public void setHostWillWinCourse(float hostWillWinCourse)
-	{
-		this.hostWillWinCourse = hostWillWinCourse;
-	}
-
-	public float getDrawCourse()
-	{
-		return drawCourse;
-	}
-
-	public void setDrawCourse(float drawCourse)
-	{
-		this.drawCourse = drawCourse;
-	}
-
-	public float getGuestWillWinCourse()
-	{
-		return guestWillWinCourse;
-	}
-
-	public void setGuestWillWinCourse(float guestWillWinCourse)
-	{
-		this.guestWillWinCourse = guestWillWinCourse;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Match [matchDate=" + matchDate + ", matchHour=" + matchHour + ", matchWeek=" + matchWeek + ", host="
-				+ host + ", guest=" + guest + ", hostGoals=" + hostGoals + ", guestGoals=" + guestGoals + "]";
-	}
-	
-	
-	
-	
 	
 }

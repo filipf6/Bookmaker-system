@@ -5,9 +5,11 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import bookmakerSystem.DAO.MatchDAO;
 import bookmakerSystem.DAO.UserDAO;
 import bookmakerSystem.model.User;
 import spark.ModelAndView;
@@ -16,13 +18,16 @@ import spark.template.velocity.VelocityTemplateEngine;
 public class Main
 {
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args)
 	{
 		DatabaseConnector.connectWithBase();
 
 		port(8012);
 		staticFileLocation("/public");
-
+		
+		Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
+		new MatchDAO().getMatches(date);
 		String layout = "templates/layout.vtl";
 		//Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		//timeStamp.toLocalDateTime().toLocalDate();
@@ -42,7 +47,6 @@ public class Main
 			Map<String, Object> model = new HashMap<String, Object>();
 			Map<String, String> errors = new HashMap();
 			UserDAO userDAO = new UserDAO();
-			
 			
 			String login = request.queryParams("login");
 			String password = request.queryParams("password");
