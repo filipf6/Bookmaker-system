@@ -4,13 +4,18 @@ import java.sql.Timestamp;
 
 public class TheWinnerOfAMatchBet extends Bet
 {
-	private int hostResult;
+	private Match betMatch;
+	private float hostWillWinCourse;
+	private float drawCourse;
+	private float guestWillWinCourse;
 	
-	public TheWinnerOfAMatchBet(int id, float course, boolean settlement, 
-			Timestamp settlementDate, int hostresult)
+	public TheWinnerOfAMatchBet(boolean settlement, Timestamp settlementDate)
 	{
-		super(id, course, settlement, settlementDate);
-		this.hostResult = hostResult;
+		super(settlement, settlementDate);
 	}
+	
+	
+	
+	
 		
 }
