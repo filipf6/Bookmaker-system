@@ -17,10 +17,11 @@ public class ClubDAO
 		try
 		{
 			if(rs.next())
-				club = new Club(rs.getInt(1), rs.getString(2), (LocalDate)rs.getObject(3), rs.getString(4));
-			else club = null;
-			
-			return club;
+			{
+				club = new Club(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4));
+				return club;
+			}
+			return null;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();

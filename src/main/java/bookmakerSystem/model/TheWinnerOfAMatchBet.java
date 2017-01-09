@@ -10,5 +10,10 @@ public class TheWinnerOfAMatchBet extends Bet
 		super(id, course, settlement);
 		this.hostResult = hostResult;
 	}
+	
+	public Result getHostResult()
+	{
+		return hostResult;
+	}
 		
 }

@@ -6,11 +6,13 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import bookmakerSystem.DAO.MatchDAO;
 import bookmakerSystem.DAO.UserDAO;
+import bookmakerSystem.model.Match;
 import bookmakerSystem.model.User;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -26,17 +28,19 @@ public class Main
 		port(8012);
 		staticFileLocation("/public");
 		
-		Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
-		new MatchDAO().getMatches(date);
 		String layout = "templates/layout.vtl";
-		//Timestamp timestamp = Timestamp.valueOf(localDateTime);
-		//timeStamp.toLocalDateTime().toLocalDate();
-		//localDate.getHour
-		// kolejny komentarz
+		
 		get("/", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
+			
+			Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
+			
+			MatchDAO matchDAO = new MatchDAO();
+			ArrayList<Match> matches = new MatchDAO().getMatches(date);
+			System.out.println(matches.get(0).getTheWinnerOfAMatchBets().get(0).getCourse());
+			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model, layout);
 
