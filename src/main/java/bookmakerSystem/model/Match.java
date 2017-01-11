@@ -109,5 +109,14 @@ public class Match
 		this.theWinnerOfAMatchBets = theWinnerOfAMatchBets;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Match [id=" + id + ", matchDate=" + matchDate + ", round=" + round + ", host=" + host + ", guest="
+				+ guest + ", hostGoals=" + hostGoals + ", guestGoals=" + guestGoals + ", theWinnerOfAMatchBets="
+				+ theWinnerOfAMatchBets + "]";
+	}
+
+	
 	
 }

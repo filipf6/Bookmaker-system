@@ -27,6 +27,7 @@ public class MatchDAO
 				matches.add(new Match(rs.getInt(1), rs.getTimestamp(2), rs.getInt(3), clubDAO.getClub(rs.getInt(6)),  
 						clubDAO.getClub(rs.getInt(7)), (Integer)rs.getObject(4), (Integer)rs.getObject(5),
 						TheWinnerOfAMatchBetDAO.getWinnerOfTheMatchBets(rs.getInt(1), rs.getTimestamp(2))));
+				//System.out.println(matches.get(0));//.getTheWinnerOfAMatchBets().get(0).getCourse());
 			}
 			return matches;
 			

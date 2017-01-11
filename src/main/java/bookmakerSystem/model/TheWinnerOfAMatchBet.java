@@ -15,5 +15,15 @@ public class TheWinnerOfAMatchBet extends Bet
 	{
 		return hostResult;
 	}
-		
+
+	@Override
+	public String toString()
+	{
+		return "TheWinnerOfAMatchBet [hostResult=" + hostResult + ", match=" + match + ", getHostResult()="
+				+ getHostResult() + ", getId()=" + getId() + ", getCourse()=" + getCourse() + ", getSettlement()="
+				+ getSettlement() + ", getMatch()=" + getMatch() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
 }
