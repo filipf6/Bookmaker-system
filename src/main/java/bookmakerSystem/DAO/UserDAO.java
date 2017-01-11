@@ -17,8 +17,8 @@ public class UserDAO
 		try
 		{
 			if(rs.next())
-				return new User(rs.getInt(1), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(2), 
-						rs.getString(3));
+				return new User(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(3), 
+						rs.getString(4));
 			else
 				return null;
 		} catch (SQLException e)

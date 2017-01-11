@@ -6,6 +6,7 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,11 +36,16 @@ public class Main
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
 			
-			Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
+
+			String zaklad=request.queryParams("zaklad");
+			System.out.println(zaklad+" zajebisty");
 			
-			MatchDAO matchDAO = new MatchDAO();
+			Timestamp date = new Timestamp(System.currentTimeMillis());
+			
+			//MatchDAO matchDAO = new MatchDAO();
 			ArrayList<Match> matches = new MatchDAO().getMatches(date);
-			System.out.println(matches.get(0).getTheWinnerOfAMatchBets().get(0).getCourse());
+			//System.out.println(matches.get(0).getId());
+			
 			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model, layout);
