@@ -35,12 +35,13 @@ public class TheWinnerOfAMatchBetDAO
 				//System.out.println(winnerOfTheMatchBets.get(0).getCourse());
 				//System.out.println(x);
 			}
+			//System.out.println(winnerOfTheMatchBets.isEmpty());
+			return winnerOfTheMatchBets;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 			return null;
 		}
-		return winnerOfTheMatchBets;
 	}
 	
 }

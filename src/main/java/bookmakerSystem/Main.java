@@ -52,7 +52,9 @@ public class Main
 
 			
 			ArrayList<Match> matches = new MatchDAO().getMatches(date);
+
 			//System.out.println(matches.get(0).getTheWinnerOfAMatchBets().get(0));
+
 			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model, layout);

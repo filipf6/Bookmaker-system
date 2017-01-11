@@ -18,12 +18,14 @@ public class MatchDAO
 		ArrayList<Match> matches = new ArrayList<Match>();
 		ClubDAO clubDAO = new ClubDAO();
 		TheWinnerOfAMatchBetDAO theWinnerOfAMatchBetDAO = new TheWinnerOfAMatchBetDAO();
+		System.out.println("jestem");
 		try
 		{
 			ResultSet rs = getResultStatement("SELECT * FROM MECZ WHERE TRUNC(DATA_ROZPOCZECIA) = "
 					+ "'" + matchDate.toLocalDateTime().toLocalDate().format(DateTimeFormatter.BASIC_ISO_DATE) + "'");
 			while(rs.next())
 			{
+				System.out.println(rs.getInt(1));
 				matches.add(new Match(rs.getInt(1), rs.getTimestamp(2), rs.getInt(3), clubDAO.getClub(rs.getInt(6)),  
 						clubDAO.getClub(rs.getInt(7)), (Integer)rs.getObject(4), (Integer)rs.getObject(5),
 						TheWinnerOfAMatchBetDAO.getWinnerOfTheMatchBets(rs.getInt(1), rs.getTimestamp(2))));

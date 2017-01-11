@@ -12,9 +12,12 @@ public abstract class Bet
 
 	public Bet(int id, float course, Boolean settlement)
 	{
-		System.out.println(course);
+
+		this.id = id;
+
 		this.settlement = settlement;
-		this.course=course;
+
+		this.course = course;
 	}
 
 
