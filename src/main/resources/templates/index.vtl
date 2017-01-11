@@ -2,44 +2,207 @@
 	Jestes zalogowany jako $user<br>
 	<a href=logout> Wyloguj</a>
 #else
-	<form action='/login' method="post">
-			<div>
-				<label for="login">Login</label>
-				<input id="login" name="login" type="text">
-			</div>
-			<div>
-				<label for="password">Haslo</label>
-				<input id="password" name="password" type="password">
-			</div>
-			<button type="submit" class="btn">Zaloguj</button>
-	</form>
-	<form action='/register' method="post">
-		<button class="btn btn-link">Zarejestruj sie</button>
-	</form>
-	
-	<table>
-	<td width=200 align=center bgcolor=aqua>Gospodarz</td>
-    	<td width=200 align=center bgcolor=aqua>Gosc</td>
-    	<td width=180 align=center bgcolor=aqua>Data</td>
-  #foreach( $match in $matches )
-    <tr>
-    	<td width=200 align=center bgcolor=#99ffff>$match.getHost().getName()</td>	
-    	<td width=200 align=center bgcolor=#99ffff>$match.getGuest().getName()</td>
-    	<td width=180 align=center bgcolor=#99ffff>$match.getMatchDate().toLocalDateTime().toLocalDate() $match.getMatchDate().toLocalDateTime().toLocalTime()</td>	
-    </tr>
-    <tr>
-    		<td></td>
-    		<td width=200 align=center bgcolor=#66ff66>Typ zakladu</td>
-    		<td width=50 align=center bgcolor=#66ff66>Kurs</td>
-    	</tr>
-    #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
-    	<tr>
-    		<td></td>
-    		<td width=200 align=center bgcolor=#99ff99>$bet.getHostResult().getType()</td>
-    		<td width=50 align=center bgcolor=#99ff99>$bet.getCourse()</td>
-    	</tr>
-    #end
-  #end
-</table>
+ <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/home.png" class="img-rounded" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <form action='/register' method="post">
+							<button class="btn btn-link">Zarejestruj sie</button>
+						</form>
+                    </li>
+                    <li>
+                      	<form action='/' method="get">
+                        	<button class="btn btn-link">Regulamin</button>
+                        </form>
+                    </li>
+                    <li>
+                    	<form action='/' method="get">
+                       		<button class="btn btn-link">Kontakt</button>
+                       	</form>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Heading Row -->
+        <div class="row">
+            <div class="col-md-8">
+                <img class="img-responsive img-rounded" src="images/start.jpg" alt="">
+            </div>
+            <!-- /.col-md-8 -->
+            <div class="col-md-4">
+                <h1>Witaj na stronie FASTforward!</h1>
+                
+               
+					<form action='/login' method="post">
+					<div>
+						<label for="login">Login</label>
+						<input id="login" name="login" type="text">
+					</div>
+					<div>
+						<label for="password">Haslo</label>
+						<input id="password" name="password" type="password">
+					</div>
+						<center><button type="submit" class="btn btn-primary btn-lg">Zaloguj</button></center>
+					</form>
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+
+  <hr>
+
+        <!-- Call to Action Well -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well text-center">
+                    Rozgrywane mecze w najbli¿szych dniach
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Content Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <h2>dzien aktualny</h2>
+                 <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                    	<th>Godzina</th>
+                                        <th>Gospodarze</th>
+                                        <th>Goœcie</th>
+                                        <th>1</th>
+                                        <th>x</th>
+                                        <th>2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	#foreach( $match in $matches )
+	                                    <tr >
+	                                    	<td>$match.getMatchDate().toLocalDateTime().toLocalTime()</td>
+	                                        <td>$match.getHost().getName()</td>
+	                                        <td>$match.getGuest().getName()</td>
+	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
+		                                        <td>$bet.getCourse()</td>
+		                                        <td>$bet.getCourse()</td>
+		                                        <td>$bet.getCourse()</td>
+	                                        #end
+	                                    </tr>
+									#end
+                                    
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+                
+            </div>
+            <!-- /.col-md-4 -->
+          
+            <!-- /.col-md-4 -->
+            <div class="col-md-6">
+                <h2>na nastepny dzien</h2>
+                 <div class="col-lg-12">
+                    <div class="panel panel-default">
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Gospodarze</th>
+                                        <th>Goœcie</th>
+                                        <th>1</th>
+                                        <th>x</th>
+                                        <th>2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <td>Manchester United</td>
+                                        <td>Liverpool</td>
+                                        <td>2,54</td>
+                                        <td class="center">8,32</td>
+                                        <td class="center">8,16</td>
+                                    </tr>
+									<tr >
+                                        <td>Manchester City</td>
+                                        <td>Tottenham FC</td>
+                                        <td>2,54</td>
+                                        <td class="center">2,32</td>
+                                        <td class="center">8,16</td>
+                                    </tr>
+									<tr >
+                                        <td>Arsenal</td>
+                                        <td>Everton</td>
+                                        <td>2,54</td>
+                                        <td class="center">8,32</td>
+                                        <td class="center">8,16</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; FASTforward</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+
 #end
 
