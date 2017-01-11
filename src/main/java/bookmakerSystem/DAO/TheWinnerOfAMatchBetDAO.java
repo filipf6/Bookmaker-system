@@ -29,12 +29,13 @@ public class TheWinnerOfAMatchBetDAO
 						(rs.getInt(3) == 0 ? false : (rs.getObject(3) == null ? null : true)), 
 						Result.valueOf(rs.getString(4))));
 			}
+			//System.out.println(winnerOfTheMatchBets.isEmpty());
+			return winnerOfTheMatchBets;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 			return null;
 		}
-		return winnerOfTheMatchBets;
 	}
 	
 }

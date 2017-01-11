@@ -12,7 +12,9 @@ public abstract class Bet
 
 	public Bet(int id, float course, Boolean settlement)
 	{
+		this.id = id;
 		this.settlement = settlement;
+		this.course = course;
 	}
 
 
