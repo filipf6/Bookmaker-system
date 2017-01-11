@@ -56,6 +56,15 @@ public class Club
 	{
 		this.stadiumName = stadiumName;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Club [id=" + id + ", name=" + name + ", establishmentDate=" + establishmentDate + ", stadiumName="
+				+ stadiumName + "]";
+	}
+	
+	
 	
 	
 }

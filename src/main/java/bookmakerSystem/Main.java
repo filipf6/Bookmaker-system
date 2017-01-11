@@ -39,7 +39,7 @@ public class Main
 
 
 			
-			//Timestamp date = new Timestamp(System.currentTimeMillis());
+			Timestamp date = new Timestamp(System.currentTimeMillis());
 
 			Coupon coupon;
 			if(request.session().attribute("coupon") == null)
@@ -49,12 +49,9 @@ public class Main
 			}
 			else
 				coupon = request.session().attribute("coupon");
-			Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
 
 			
 			ArrayList<Match> matches = new MatchDAO().getMatches(date);
-
-			System.out.println(matches.get(0).getGuest());
 
 			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
@@ -136,9 +133,8 @@ public class Main
 
 			String login = request.queryParams("login");
 			String password = request.queryParams("password");
-			
 			User loggedUser = new UserDAO().getByLogin(login);
-			System.out.println(loggedUser.toString());
+			
 			if (loggedUser == null || !loggedUser.getPassword().equals(password))
 			{
 				model.put("template", "templates/logingError.vtl");

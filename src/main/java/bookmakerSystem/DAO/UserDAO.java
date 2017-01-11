@@ -17,8 +17,8 @@ public class UserDAO
 		try
 		{
 			if(rs.next())
-				return new User(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(3), 
-						rs.getString(4));
+				return new User(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+						rs.getString(6), rs.getString(7), rs.getDouble(8));
 			else
 				return null;
 		} catch (SQLException e)
@@ -34,8 +34,8 @@ public class UserDAO
 		try
 		{
 			if(rs.next())
-				return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-						rs.getString(6));
+				return new User(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+						rs.getString(6), rs.getString(7), rs.getDouble(8));
 			else
 				return null;
 		} catch (SQLException e)
@@ -47,6 +47,6 @@ public class UserDAO
 	
 	public void addUser(String login, String password, String email, String name, String surname)
 	{
-        DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (1, '"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"')");
+        DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (vid_uzytkownika.nextval, 0, '"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"',0)");
 	}
 }
