@@ -47,6 +47,6 @@ public class UserDAO
 	
 	public void addUser(String login, String password, String email, String name, String surname)
 	{
-        DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (SEQ_ID.NEXTVAL,'"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"')");
+        DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (1, '"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"')");
 	}
 }

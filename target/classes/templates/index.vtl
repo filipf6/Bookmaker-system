@@ -20,12 +20,12 @@
 	<table>
 	<td width=200 align=center bgcolor=aqua>Gospodarz</td>
     	<td width=200 align=center bgcolor=aqua>Gosc</td>
-    	<td width=180 bgcolor=aqua>Data</td>
+    	<td width=180 align=center bgcolor=aqua>Data</td>
   #foreach( $match in $matches )
     <tr>
     	<td width=200 align=center bgcolor=#99ffff>$match.getHost().getName()</td>	
     	<td width=200 align=center bgcolor=#99ffff>$match.getGuest().getName()</td>
-    	<td width=180 bgcolor=#99ffff>$match.getMatchDate().toLocalDateTime().toLocalDate() $match.getMatchDate().toLocalDateTime().toLocalTime()</td>	
+    	<td width=180 align=center bgcolor=#99ffff>$match.getMatchDate().toLocalDateTime().toLocalDate() $match.getMatchDate().toLocalDateTime().toLocalTime()</td>	
     </tr>
     <tr>
     		<td></td>
@@ -42,11 +42,4 @@
   #end
 </table>
 #end
-
-
-
-
-
-
-
 

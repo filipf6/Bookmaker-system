@@ -13,6 +13,7 @@ import java.util.Map;
 
 import bookmakerSystem.DAO.MatchDAO;
 import bookmakerSystem.DAO.UserDAO;
+import bookmakerSystem.model.Coupon;
 import bookmakerSystem.model.Match;
 import bookmakerSystem.model.User;
 import spark.ModelAndView;
@@ -36,11 +37,25 @@ public class Main
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
 
+
 			
-			Timestamp date = new Timestamp(System.currentTimeMillis());
+			//Timestamp date = new Timestamp(System.currentTimeMillis());
+
+			Coupon coupon;
+			if(request.session().attribute("coupon") == null)
+			{
+				coupon = new Coupon();
+				request.session().attribute("coupon", coupon);
+			}
+			else
+				coupon = request.session().attribute("coupon");
+			Timestamp date = new Timestamp(117, 0, 21, 1, 0, 0, 0);
+
 			
 			ArrayList<Match> matches = new MatchDAO().getMatches(date);
-			
+
+			System.out.println(matches.get(0).getGuest());
+
 			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model, layout);

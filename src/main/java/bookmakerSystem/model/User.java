@@ -15,14 +15,14 @@ public class User
 	private String name;
 	private String surname;
 	
-	public User(int id, String login, String password, String email, String name, String surname)
+	public User(int id, String name, String surname, String login, String password, String email)
 	{
 		this.id = id;
+		this.name = name;
+		this.surname = surname;
 		this.login = login;
 		this.password = password;
 		this.email = email;
-		this.name = name;
-		this.surname = surname;
 	}
 
 	public String getPassword()
