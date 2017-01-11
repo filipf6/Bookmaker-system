@@ -35,16 +35,11 @@ public class Main
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
-			
 
-			String zaklad=request.queryParams("zaklad");
-			System.out.println(zaklad+" zajebisty");
 			
 			Timestamp date = new Timestamp(System.currentTimeMillis());
 			
-			//MatchDAO matchDAO = new MatchDAO();
 			ArrayList<Match> matches = new MatchDAO().getMatches(date);
-			//System.out.println(matches.get(0).getId());
 			
 			model.put("matches", matches);
 			model.put("template", "templates/index.vtl");
