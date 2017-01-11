@@ -16,6 +16,31 @@
 	<form action='/register' method="post">
 		<button class="btn btn-link">Zarejestruj sie</button>
 	</form>
+	
+	<table>
+	<td width=200 align=center bgcolor=aqua>Gospodarz</td>
+    	<td width=200 align=center bgcolor=aqua>Gosc</td>
+    	<td width=180 bgcolor=aqua>Data</td>
+  #foreach( $match in $matches )
+    <tr>
+    	<td width=200 align=center bgcolor=#99ffff>$match.getHost().getName()</td>	
+    	<td width=200 align=center bgcolor=#99ffff>$match.getGuest().getName()</td>
+    	<td width=180 bgcolor=#99ffff>$match.getMatchDate().toLocalDateTime().toLocalDate() $match.getMatchDate().toLocalDateTime().toLocalTime()</td>	
+    </tr>
+    <tr>
+    		<td></td>
+    		<td width=200 align=center bgcolor=#66ff66>Typ zakladu</td>
+    		<td width=50 align=center bgcolor=#66ff66>Kurs</td>
+    	</tr>
+    #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
+    	<tr>
+    		<td></td>
+    		<td width=200 align=center bgcolor=#99ff99>$bet.getHostResult().getType()</td>
+    		<td width=50 align=center bgcolor=#99ff99>$bet.getCourse()</td>
+    	</tr>
+    #end
+  #end
+</table>
 #end
 
 
