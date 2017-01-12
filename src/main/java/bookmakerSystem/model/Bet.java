@@ -14,9 +14,7 @@ public abstract class Bet
 	{
 
 		this.id = id;
-
 		this.settlement = settlement;
-
 		this.course = course;
 	}
 

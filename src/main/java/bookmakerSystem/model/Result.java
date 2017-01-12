@@ -1,7 +1,7 @@
 package bookmakerSystem.model;
 
 public enum Result {
-	DEFEAT("Przegrana gospodarza"), DRAW("Remis"), WIN("Wygrana gospodarza");
+	DEFEAT("Host defeat"), DRAW("Draw"), WIN("Host win");
 	String type;
 	Result(String type) {
 		this.type = type;

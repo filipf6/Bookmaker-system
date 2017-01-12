@@ -17,25 +17,19 @@ public class TheWinnerOfAMatchBetDAO
 {
 	public static ArrayList<TheWinnerOfAMatchBet> getWinnerOfTheMatchBets(int matchId, Timestamp date)
 	{
-		System.out.println(matchId+" "+date);
 		ArrayList<TheWinnerOfAMatchBet> winnerOfTheMatchBets = new ArrayList<TheWinnerOfAMatchBet>();
 		ResultSet rs = getResultStatement("SELECT * FROM ZWYCIEZCA_MECZU WHERE ID_MECZU = "
 				+ "(SELECT ID_MECZU FROM MECZ WHERE ID_MECZU = " + matchId + " AND TRUNC(DATA_ROZPOCZECIA) = "
-						+ "'" + date.toLocalDateTime().toLocalDate().format(DateTimeFormatter.BASIC_ISO_DATE) + "')");
+						+ "'" + date.toLocalDateTime().toLocalDate().format(DateTimeFormatter.BASIC_ISO_DATE) + "') ORDER BY TYPOWANY_R_D_GOSP DESC");
 		try
 		{
 			while(rs.next())
 			{
-				//Boolean lol=rs.getInt(3) == 0 ? false : (rs.getObject(3) == null ? null : true);
-				//System.out.println(rs.getInt(1)+" "+rs.getFloat(2)+" "+rs.getInt(3)+" "+rs.getString(4)+" "+rs.getInt(5)+" "+lol);
 				
 				winnerOfTheMatchBets.add(new TheWinnerOfAMatchBet(rs.getInt(1), rs.getFloat(2),
 						(rs.getInt(3) == 0 ? false : (rs.getObject(3) == null ? null : true)), 
 						Result.valueOf(rs.getString(4))));
-				//System.out.println(winnerOfTheMatchBets.get(0).getCourse());
-				//System.out.println(x);
 			}
-			//System.out.println(winnerOfTheMatchBets.isEmpty());
 			return winnerOfTheMatchBets;
 		} catch (SQLException e)
 		{

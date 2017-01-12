@@ -1,6 +1,281 @@
 #if($user) 
-	Jestes zalogowany jako $user<br>
-	<a href=logout> Wyloguj</a>
+	
+	 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/home.png" class="img-rounded" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <form action='/register' method="post">
+							<button class="btn btn-link">Zarejestruj sie</button>
+						</form>
+                    </li>
+                    <li>
+                      	<form action='/' method="get">
+                        	<button class="btn btn-link">Regulamin</button>
+                        </form>
+                    </li>
+                    <li>
+                    	<form action='/' method="get">
+                       		<button class="btn btn-link">Kontakt</button>
+                       	</form>
+					</li>
+					
+                </ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#">Stan konta: 150,20 PLN</a>
+					</li>
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-user">$user</span></a>
+					</li>
+					
+					<li>
+						<a href="logout"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a>
+					</li>
+				</ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+	 </nav>
+	 
+	  <!-- Page Content -->
+	  
+    <div class="container">
+	
+		<div class="row">
+			<div class="col-md-8">
+                <img class="img-responsive img-rounded" src="images/start.jpg" alt="">
+            </div>
+			
+		<form action='/' method="get">
+			<div class="col-md-4">
+				
+				 <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+					
+					<h2><p class="bg-info text-center">Kupon</p></h2>
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr >
+                                    	<th>Godzina</th>
+                                        <th>Gospodarze</th>
+                                        <th>Goscie</th>
+                                        <th>Typ</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+	                                    <tr class="info" >
+	                                    	<td>121:00</td>
+	                                        <td>Manchester United</td>
+	                                        <td>Arsenal</td>
+	                                        <td>1</td>
+										</tr>
+										
+										 <tr class="info" >
+	                                    	<td>20:00</td>
+	                                        <td>Manchester United</td>
+	                                        <td>Manchester City</td>
+	                                        <td>x</td>
+										</tr>
+										
+											 <tr class="info" >
+	                                    	<td>18:00</td>
+	                                        <td>Manchester City</td>
+	                                        <td>Manchester Arsenal</td>
+	                                        <td>2</td>
+										</tr>
+								
+										
+											
+                                </tbody>
+								
+							
+								
+								
+                            </table>
+                            <!-- /.table-responsive -->
+                           <div class="form-group">
+									<label for"stawka">Stawka</label>
+								    <input class="form-control" id="stawka" required name="stawka" type="text">
+							</div>
+							
+							<div class="form-group">
+									<input class="btn btn-primary" type="submit" name="submit_reg" value="Wyœlij kupon">
+							</div>
+							
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+				</div>
+			
+			
+			</div>
+		</form>
+
+		
+		</div>
+		
+			<hr>
+		  <!-- Call to Action Well -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well text-center">
+                    Rozgrywane mecze w najblizszych dniach
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Content Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <h2>dzien aktualny</h2>
+                 <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr class="active">
+                                    	<th>Godzina</th>
+                                        <th>Gospodarze</th>
+                                        <th>Goscie</th>
+                                        <th>1</th>
+                                        <th>x</th>
+                                        <th>2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	#foreach( $match in $todayMatches )
+	                                    <tr >
+	                                    	<td>$match.getMatchDate().toLocalDateTime().toLocalTime()</td>
+	                                        <td>$match.getHost().getName()</td>
+	                                        <td>$match.getGuest().getName()</td>
+	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
+	                                       		
+		                                     		<td>
+													
+														 $bet.getCourse()
+												
+											        </td>
+
+	                                        #end
+	                                        
+	                                    </tr>
+									#end
+                                    
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+                
+            </div>
+            <!-- /.col-md-4 -->
+          
+            <!-- /.col-md-4 -->
+            <div class="col-md-6">
+                <h2>na nastepny dzien</h2>
+                 <div class="col-lg-12">
+                    <div class="panel panel-default">
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr class="active">
+                                    	<th>Godzina</th>
+                                        <th>Gospodarze</th>
+                                        <th>Goscie</th>
+                                        <th>1</th>
+                                        <th>x</th>
+                                        <th>2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   #foreach( $match in $tomorrowMatches )
+	                                    <tr >
+	                                    	<td>$match.getMatchDate().toLocalDateTime().toLocalTime()</td>
+	                                        <td>$match.getHost().getName()</td>
+	                                        <td>$match.getGuest().getName()</td>
+	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
+	                                       		
+		                                     		<td>
+													
+														 $bet.getCourse()
+													
+													
+													</td>
+
+	                                        #end
+	                                        
+	                                    </tr>
+									#end
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; FASTforward</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+	
+	
+
+ 
+
 #else
  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -33,7 +308,8 @@
                     	<form action='/' method="get">
                        		<button class="btn btn-link">Kontakt</button>
                        	</form>
-                    </li>
+                  
+					</li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -51,19 +327,36 @@
             </div>
             <!-- /.col-md-8 -->
             <div class="col-md-4">
-                <h1>Witaj na stronie FASTforward!</h1>
+                
                 
                
 					<form action='/login' method="post">
+					
+					<div class="form-login">
+						<h4>Zaloguj sie</h4>
+					
+					
 					<div>
 						<label for="login">Login</label>
-						<input id="login" name="login" type="text">
+						<input class="form-control input-sm chat-input" id="login" name="login" type="text">
 					</div>
 					<div>
 						<label for="password">Haslo</label>
-						<input id="password" name="password" type="password">
+						<input class="form-control input-sm chat-input" id="password" name="password" type="password">
+						#if($loginError)
+							<div class="alert alert-danger">
+								$loginError
+							</div>
+						#end
+							
 					</div>
-						<center><button type="submit" class="btn btn-primary btn-lg">Zaloguj</button></center>
+					
+					<hr>
+						
+						<button type="submit" class="btn btn-primary btn-md">login <i class="fa fa-sign-in"></i></button>
+							
+						
+					</div>
 					</form>
             </div>
             <!-- /.col-md-4 -->
@@ -95,7 +388,7 @@
                         <div class="panel-body">
                             <table width="100%" class="table  table-bordered " id="dataTables-example">
                                 <thead>
-                                    <tr>
+                                    <tr class="active">
                                     	<th>Godzina</th>
                                         <th>Gospodarze</th>
                                         <th>Goœcie</th>
@@ -105,15 +398,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	#foreach( $match in $matches )
+                                	#foreach( $match in $todayMatches )
 	                                    <tr >
 	                                    	<td>$match.getMatchDate().toLocalDateTime().toLocalTime()</td>
 	                                        <td>$match.getHost().getName()</td>
 	                                        <td>$match.getGuest().getName()</td>
 	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
-		                                        <td>$bet.getCourse()</td>
-		             
+	                                       		
+		                                     		<td>
+													
+														 $bet.getCourse()
+												
+											        </td>
+
 	                                        #end
+	                                        
 	                                    </tr>
 									#end
                                     
@@ -143,7 +442,8 @@
                         <div class="panel-body">
                             <table width="100%" class="table  table-bordered " id="dataTables-example">
                                 <thead>
-                                    <tr>
+                                    <tr class="active">
+                                    	<th>Godzina</th>
                                         <th>Gospodarze</th>
                                         <th>Goœcie</th>
                                         <th>1</th>
@@ -152,28 +452,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr >
-                                        <td>Manchester United</td>
-                                        <td>Liverpool</td>
-                                        <td>2,54</td>
-                                        <td class="center">8,32</td>
-                                        <td class="center">8,16</td>
-                                    </tr>
-									<tr >
-                                        <td>Manchester City</td>
-                                        <td>Tottenham FC</td>
-                                        <td>2,54</td>
-                                        <td class="center">2,32</td>
-                                        <td class="center">8,16</td>
-                                    </tr>
-									<tr >
-                                        <td>Arsenal</td>
-                                        <td>Everton</td>
-                                        <td>2,54</td>
-                                        <td class="center">8,32</td>
-                                        <td class="center">8,16</td>
-                                    </tr>
-                                    
+                                   #foreach( $match in $tomorrowMatches )
+	                                    <tr >
+	                                    	<td>$match.getMatchDate().toLocalDateTime().toLocalTime()</td>
+	                                        <td>$match.getHost().getName()</td>
+	                                        <td>$match.getGuest().getName()</td>
+	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
+	                                       		
+		                                     		<td>
+													
+														 $bet.getCourse()
+													
+													
+													</td>
+
+	                                        #end
+	                                        
+	                                    </tr>
+									#end
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
@@ -204,4 +500,3 @@
 
 
 #end
-
