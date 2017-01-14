@@ -71,11 +71,19 @@ public class Main
 			return new ModelAndView(model, layout);
 
 		}, new VelocityTemplateEngine());
+		
+		get("/register", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			model.put("template", "templates/register.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
 
 		post("/register", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
-			Map<String, String> errors = new HashMap();
+			Map<String, String> errors = new HashMap<String, String>();
 			UserDAO userDAO = new UserDAO();
 			
 			String login = request.queryParams("login");
@@ -118,7 +126,7 @@ public class Main
 					
 					userDAO.addUser(login, password, email, name, surname);
 					User loggedUser = userDAO.getByLogin(login);
-					request.session().attribute("user", loggedUser.getLogin());
+					request.session().attribute("user", loggedUser);
 					
 					model.put("todayMatches", todayMatches);
 					model.put("tomorrowMatches", tomorrowMatches);
@@ -140,6 +148,8 @@ public class Main
 
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
+		
+		
 
 
 		post("/login", (request, response) ->
@@ -171,7 +181,8 @@ public class Main
 			{
 				model.put("todayMatches", todayMatches);
 				model.put("tomorrowMatches", tomorrowMatches);
-				request.session().attribute("user", loggedUser.getLogin());
+				//request.session().attribute("user", loggedUser.getLogin());
+				request.session().attribute("user", loggedUser);
 				model.put("user", request.session().attribute("user"));
 				model.put("template", "templates/index.vtl"); // tutej welcome
 			}
@@ -184,9 +195,98 @@ public class Main
 			Map<String, Object> model = new HashMap<String, Object>();
 			request.session().removeAttribute("user");
 			model.put("user", request.session().attribute("user"));
-			model.put("template", "templates/index.vtl");
 			
+			
+			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
+			LocalDateTime date=LocalDateTime.now();
+			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
+			
+			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
+			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
+			
+			model.put("todayMatches", todayMatches);
+			model.put("tomorrowMatches", tomorrowMatches);
+			model.put("template", "templates/index.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
+		
+		get("/moneyManagement", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", request.session().attribute("user"));
+			
+			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
+			LocalDateTime date=LocalDateTime.now();
+			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
+			
+			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
+			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
+			
+			model.put("todayMatches", todayMatches);
+			model.put("tomorrowMatches", tomorrowMatches);
+			model.put("template", "templates/moneyManagement.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		post("/moneyManagement", (request, response)->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			User loggedUser=request.session().attribute("user");
+			UserDAO userOperations=new UserDAO();
+			
+			model.put("user", request.session().attribute("user"));
+			
+			String contribute=request.queryParams("contribute");
+			String getMoney=request.queryParams("getMoney");
+			
+			if(!(contribute==null))
+			{
+				int amountToAdd=Integer.parseInt(contribute);
+				double accountBalance=loggedUser.getAccountBalance()+amountToAdd;
+				loggedUser.setAccountBalance(accountBalance);
+				userOperations.setAccountBalance(loggedUser.getId(), accountBalance);
+			}
+			
+			if(!(getMoney==null))
+			{
+				int amountToSubstract=Integer.parseInt(getMoney);
+				double accountBalance=loggedUser.getAccountBalance();
+				if(accountBalance>=amountToSubstract)
+					{
+						accountBalance-=amountToSubstract;
+						System.out.println(accountBalance);
+						accountBalance*=100;
+						accountBalance=Math.round(accountBalance);
+						accountBalance/=100;
+						System.out.println(accountBalance);
+						loggedUser.setAccountBalance(accountBalance);
+						userOperations.setAccountBalance(loggedUser.getId(), accountBalance);
+					}
+				else
+				{
+					model.put("getMoneyError","Nie masz wystarczajacych srodkow na koncie!");
+				}
+			}
+			
+			
+
+			
+			
+
+			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
+			LocalDateTime date=LocalDateTime.now();
+			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
+			
+			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
+			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
+			
+			model.put("todayMatches", todayMatches);
+			model.put("tomorrowMatches", tomorrowMatches);
+			model.put("template", "templates/moneyManagement.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		
 	}
 }

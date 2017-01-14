@@ -49,4 +49,11 @@ public class UserDAO
 	{
         DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (vid_uzytkownika.nextval, 0, '"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"',0)");
 	}
+	
+	public void setAccountBalance(int id, double accountBalance)
+	{
+		DatabaseConnector.executeUpdate("UPDATE UZYTKOWNIK SET STAN_KONTA="+accountBalance+" WHERE ID_UZYTKOWNIKA="+id);
+	}
+	
+
 }

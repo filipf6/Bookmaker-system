@@ -18,28 +18,20 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <form action='/register' method="post">
-							<button class="btn btn-link">Zarejestruj sie</button>
-						</form>
+						<a href="/">Regulamin</a>
                     </li>
                     <li>
-                      	<form action='/' method="get">
-                        	<button class="btn btn-link">Regulamin</button>
-                        </form>
-                    </li>
-                    <li>
-                    	<form action='/' method="get">
-                       		<button class="btn btn-link">Kontakt</button>
-                       	</form>
+                    	<a href="/">Kontakt</a>
 					</li>
 					
                 </ul>
 				<ul class="nav navbar-nav navbar-right">
+					
+						<li>
+							<a href="moneyManagement">Stan konta: $user.getAccountBalance()</a>
+						</li>
 					<li>
-						<a href="#">Stan konta: 150,20 PLN</a>
-					</li>
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-user">$user</span></a>
+						<a href="#"><span class="glyphicon glyphicon-user">$user.getLogin()</span></a>
 					</li>
 					
 					<li>
@@ -181,7 +173,13 @@
 	                                       		
 		                                     		<td>
 													
-														 $bet.getCourse()
+														 <form action='/' method="get">
+															<div class="btn-group" data-toggle="buttons">
+																<label class="btn btn-link">
+														  			<input onChange="this.form.submit();" name="zaklad" value=$bet.getId() type="radio"> $bet.getCourse()
+														  		</label>
+														  	</div>
+														</form>
 												
 											        </td>
 
@@ -235,7 +233,13 @@
 	                                       		
 		                                     		<td>
 													
-														 $bet.getCourse()
+														 <form action='/' method="get">
+															<div class="btn-group" data-toggle="buttons">
+																<label class="btn btn-link">
+														  			<input onChange="this.form.submit();" name="zaklad" value=$bet.getId() type="radio"> $bet.getCourse()
+														  		</label>
+														  	</div>
+														</form>
 													
 													
 													</td>
@@ -295,19 +299,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <form action='/register' method="post">
-							<button class="btn btn-link">Zarejestruj sie</button>
-						</form>
+                        <a href="/register">Zarejestruj sie</a>
                     </li>
                     <li>
-                      	<form action='/' method="get">
-                        	<button class="btn btn-link">Regulamin</button>
-                        </form>
+                      	<a href="/">Regulamin</a>
                     </li>
                     <li>
-                    	<form action='/' method="get">
-                       		<button class="btn btn-link">Kontakt</button>
-                       	</form>
+                    	<a href="/">Kontakt</a>
                   
 					</li>
                 </ul>
@@ -406,9 +404,9 @@
 	                                        #foreach( $bet in $match.getTheWinnerOfAMatchBets() )
 	                                       		
 		                                     		<td>
-													
-														 $bet.getCourse()
-												
+														$bet.getCourse()
+														  		
+														
 											        </td>
 
 	                                        #end
