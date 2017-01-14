@@ -249,8 +249,10 @@ public class Main
 			
 			String contribute=request.queryParams("contribute");
 			String getMoney=request.queryParams("getMoney");
+			String getAllMoney=request.queryParams("getAllMoney");
+			System.out.println(getAllMoney);
 			
-			if(!(contribute==null))
+			if(contribute!=null)
 			{
 				int amountToAdd=Integer.parseInt(contribute);
 				double accountBalance=loggedUser.getAccountBalance()+amountToAdd;
@@ -258,7 +260,7 @@ public class Main
 				userOperations.setAccountBalance(loggedUser.getId(), accountBalance);
 			}
 			
-			if(!(getMoney==null))
+			if(getMoney!=null)
 			{
 				int amountToSubstract=Integer.parseInt(getMoney);
 				double accountBalance=loggedUser.getAccountBalance();
@@ -275,6 +277,21 @@ public class Main
 				{
 					model.put("getMoneyError","Nie masz wystarczajacych srodkow na koncie!");
 				}
+			}
+			
+			if(getAllMoney!=null)
+			{
+				double accountBalance=loggedUser.getAccountBalance();
+				if(accountBalance==0)
+				{
+					model.put("getAllMoneyError", "Nie posiadasz zadnych srodkow na koncie");
+				}
+				else
+				{
+					loggedUser.setAccountBalance(0);
+					userOperations.setAccountBalance(loggedUser.getId(), 0);
+				}
+				
 			}
 			
 			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
