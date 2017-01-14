@@ -16,6 +16,7 @@ import bookmakerSystem.DAO.UserDAO;
 import bookmakerSystem.DAO.TheWinnerOfAMatchBetDAO;
 import bookmakerSystem.model.Coupon;
 import bookmakerSystem.model.Match;
+import bookmakerSystem.model.TheWinnerOfAMatchBet;
 import bookmakerSystem.model.User;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
@@ -26,10 +27,6 @@ public class Main
 	public static void main(String[] args)
 	{
 		DatabaseConnector.connectWithBase();
-
-		
-		
-		//pushdsadsadsa
 		
 		port(8012);
 		staticFileLocation("/public");
@@ -68,14 +65,8 @@ public class Main
 				request.session().attribute("coupon", coupon);
 			}
 			
-			if(request.queryParams("stawka") != null)
+			if(request.queryParams("delete") != null)
 				request.session().attribute("coupon", new Coupon());
-
-			/*for(TheWinnerOfAMatchBet x :matches.get(1).getTheWinnerOfAMatchBets())
-			{
-				System.out.println(x.getHostResult()+" "+x.getCourse());
-			}*/
-			//System.out.println(matches.get(0).getTheWinnerOfAMatchBets().get(0));
 			model.put("coupon", request.session().attribute("coupon"));
 			model.put("todayMatches", todayMatches);
 			model.put("tomorrowMatches", tomorrowMatches);
@@ -312,5 +303,31 @@ public class Main
 		}, new VelocityTemplateEngine());
 		
 		
+		get("/sendedCoupon", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", request.session().attribute("user"));
+			
+			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
+			LocalDateTime date=LocalDateTime.now();
+			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
+			
+			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
+			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
+			
+			Coupon coupon = request.session().attribute("coupon");
+			coupon.setBid(Double.parseDouble(request.queryParams("stawka")));
+			coupon.setPossibleWin(coupon.getBid());
+			for(TheWinnerOfAMatchBet temp: coupon.getBets())
+				coupon.setPossibleWin(coupon.getPossibleWin()*temp.getCourse());
+			System.out.println(coupon.getPossibleWin());
+			coupon.setPossibleWin(Math.round(coupon.getPossibleWin()*100)/100);
+			System.out.println(coupon.getPossibleWin());
+			model.put("coupon", request.session().attribute("coupon"));
+			model.put("todayMatches", todayMatches);
+			model.put("tomorrowMatches", tomorrowMatches);
+			model.put("template", "templates/sendedCoupon.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
 	}
 }
