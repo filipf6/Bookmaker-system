@@ -28,6 +28,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="F:/Nowy folder/eclipse/jdbc driver/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dell/git/Bookmaker-system/ojdbc6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
