@@ -93,6 +93,8 @@ public class Main
 			String name = request.queryParams("name");
 			String surname = request.queryParams("surname");
 			
+			System.out.println(login);
+			
 			if(login!=null)
 			{
 				if(new UserDAO().getByLogin(login) != null)
@@ -255,11 +257,9 @@ public class Main
 				if(accountBalance>=amountToSubstract)
 					{
 						accountBalance-=amountToSubstract;
-						System.out.println(accountBalance);
 						accountBalance*=100;
 						accountBalance=Math.round(accountBalance);
 						accountBalance/=100;
-						System.out.println(accountBalance);
 						loggedUser.setAccountBalance(accountBalance);
 						userOperations.setAccountBalance(loggedUser.getId(), accountBalance);
 					}
