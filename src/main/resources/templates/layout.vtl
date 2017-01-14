@@ -31,8 +31,91 @@
 </head>
 
 <body>
-
-
+	#if($user) 
+	
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href="/">
+	                    <img src="images/home.png" class="img-rounded" alt="">
+	                </a>
+	            </div>
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav">
+	                    <li>
+							<a href="/">Regulamin</a>
+	                    </li>
+	                    <li>
+	                    	<a href="/">Kontakt</a>
+						</li>
+						
+	                </ul>
+					<ul class="nav navbar-nav navbar-right">
+						
+							<li>
+								<a href="moneyManagement">Stan konta: $user.getAccountBalance()</a>
+							</li>
+							
+							<li>
+								<a href="userDataManagement"><span class="glyphicon glyphicon-user">$user.getLogin()</span></a>
+							</li>
+							
+							<li>
+								<a href="couponManagement">Twoje kupony</span></a>
+							</li>
+							
+							<li>
+								<a href="logout"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a>
+							</li>
+					</ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container -->
+		 </nav>
+	#else
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href="/">
+	                    <img src="images/home.png" class="img-rounded" alt="">
+	                </a>
+	            </div>
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav">
+	                    <li>
+	                        <a href="/register">Zarejestruj sie</a>
+	                    </li>
+	                    <li>
+	                      	<a href="/">Regulamin</a>
+	                    </li>
+	                    <li>
+	                    	<a href="/">Kontakt</a>
+	                  
+						</li>
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container -->
+	    </nav>
+	#end
 
 	#parse( $template ) 
 
