@@ -17,7 +17,7 @@ public class Match
 	private ArrayList<TheWinnerOfAMatchBet> theWinnerOfAMatchBets;
 
 	public Match(int id, Timestamp matchDate, int round, Club host, Club guest, Integer hostGoals,
-			Integer guestGoals, ArrayList<TheWinnerOfAMatchBet> theWinnerOfAMatchBets)
+			Integer guestGoals)
 	{
 		this.id = id;
 		this.matchDate = matchDate;
@@ -26,7 +26,6 @@ public class Match
 		this.guest = guest;
 		this.hostGoals = hostGoals;
 		this.guestGoals = guestGoals;
-		this.theWinnerOfAMatchBets = theWinnerOfAMatchBets;
 	}
 
 	public int getId()
