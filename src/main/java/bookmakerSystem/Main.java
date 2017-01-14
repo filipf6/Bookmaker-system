@@ -6,7 +6,6 @@ import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +13,7 @@ import java.util.Map;
 
 import bookmakerSystem.DAO.MatchDAO;
 import bookmakerSystem.DAO.UserDAO;
+import bookmakerSystem.DAO.TheWinnerOfAMatchBetDAO;
 import bookmakerSystem.model.Coupon;
 import bookmakerSystem.model.Match;
 import bookmakerSystem.model.User;
@@ -23,7 +23,6 @@ import spark.template.velocity.VelocityTemplateEngine;
 public class Main
 {
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args)
 	{
 		DatabaseConnector.connectWithBase();
@@ -48,23 +47,32 @@ public class Main
 			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
 			
 			Coupon coupon;
+			
 			if(request.session().attribute("coupon") == null)
 			{
 				coupon = new Coupon();
 				request.session().attribute("coupon", coupon);
 			}
 			else
+			{
 				coupon = request.session().attribute("coupon");
-
+				if(request.queryParams("zaklad") != null)
+				{
+					coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
+							Integer.parseInt(request.queryParams("zaklad"))));
+				}
+				request.session().attribute("coupon", coupon);
+			}
 			
-			
+			if(request.queryParams("stawka") != null)
+				request.session().attribute("coupon", new Coupon());
 
 			/*for(TheWinnerOfAMatchBet x :matches.get(1).getTheWinnerOfAMatchBets())
 			{
 				System.out.println(x.getHostResult()+" "+x.getCourse());
 			}*/
 			//System.out.println(matches.get(0).getTheWinnerOfAMatchBets().get(0));
-
+			model.put("coupon", request.session().attribute("coupon"));
 			model.put("todayMatches", todayMatches);
 			model.put("tomorrowMatches", tomorrowMatches);
 			model.put("template", "templates/index.vtl");
@@ -269,11 +277,6 @@ public class Main
 				}
 			}
 			
-			
-
-			
-			
-
 			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
 			LocalDateTime date=LocalDateTime.now();
 			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));

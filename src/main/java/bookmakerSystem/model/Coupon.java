@@ -59,5 +59,9 @@ public class Coupon
 	{
 		this.bets = bets;
 	}
+	public void addBets(TheWinnerOfAMatchBet bet)
+	{
+		this.bets.add(bet);
+	}
 	
 }
