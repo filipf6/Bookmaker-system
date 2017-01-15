@@ -10,6 +10,7 @@ public class Coupon
 	private double possibleWin;
 	private Integer settlement;
 	private Timestamp settlementDate;
+	private int userId;
 	ArrayList<TheWinnerOfAMatchBet> bets = new ArrayList<TheWinnerOfAMatchBet>();
 	public int getId()
 	{
@@ -62,6 +63,14 @@ public class Coupon
 	public void addBets(TheWinnerOfAMatchBet bet)
 	{
 		this.bets.add(bet);
+	}
+	public int getUserId()
+	{
+		return userId;
+	}
+	public void setUserId(int userId)
+	{
+		this.userId = userId;
 	}
 	
 }

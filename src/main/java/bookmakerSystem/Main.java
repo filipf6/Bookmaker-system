@@ -46,28 +46,27 @@ public class Main
 			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
 			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
 			
-			Coupon coupon;
-			
-			if(request.session().attribute("coupon") == null)
+			if(request.session().attribute("user") != null)	
 			{
-				coupon = new Coupon();
-				request.session().attribute("coupon", coupon);
-			}
-			else
-			{
-				coupon = request.session().attribute("coupon");
-				if(request.queryParams("bet") != null)
-				{
-					coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
-							Integer.parseInt(request.queryParams("bet"))));
-				}
-				request.session().attribute("coupon", coupon);
-			}
-	
-			if(request.queryParams("delete") != null)
-				request.session().attribute("coupon", new Coupon());
+				Coupon coupon;
 			
-			model.put("coupon", request.session().attribute("coupon"));
+
+					coupon = request.session().attribute("coupon");
+					if(request.queryParams("bet") != null)
+					{
+						coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
+								Integer.parseInt(request.queryParams("bet"))));
+					}
+					request.session().attribute("coupon", coupon);
+		
+				if(request.queryParams("delete") != null || request.queryParams("acceptCoupon") != null)
+					request.session().attribute("coupon", new Coupon());
+				
+				//if(request.queryParams("acceptCoupon") != null)
+					
+				
+				model.put("coupon", request.session().attribute("coupon"));
+			}
 			model.put("todayMatches", todayMatches);
 			model.put("tomorrowMatches", tomorrowMatches);
 			model.put("template", "templates/index.vtl");
@@ -78,7 +77,6 @@ public class Main
 		
 		post("/", (request, response) ->
 		{
-			System.out.println("ggggggg");
 			Map<String, Object> model = new HashMap<String, Object>();
 			Map<String, String> errors = new HashMap<String, String>();
 			
@@ -233,10 +231,14 @@ public class Main
 			} 
 			else
 			{
+				Coupon coupon = new Coupon();
+				model.put("coupon", request.session().attribute("coupon"));
 				model.put("todayMatches", todayMatches);
 				model.put("tomorrowMatches", tomorrowMatches);
 				//request.session().attribute("user", loggedUser.getLogin());
 				request.session().attribute("user", loggedUser);
+				coupon.setUserId(((User) request.session().attribute("user")).getId());
+				request.session().attribute("coupon", coupon);
 				model.put("user", request.session().attribute("user"));
 				model.put("template", "templates/index.vtl");
 			}
@@ -247,6 +249,7 @@ public class Main
 		get("/logout", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
+			request.session().removeAttribute("coupon");
 			request.session().removeAttribute("user");
 			model.put("user", request.session().attribute("user"));
 			
