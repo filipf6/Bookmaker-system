@@ -35,11 +35,10 @@ public class Main
 		
 		get("/", (request, response) ->
 		{
+			System.out.println("xxxxxxxx");
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
 
-
-			
 			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
 			LocalDateTime date=LocalDateTime.now();
 			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
@@ -57,16 +56,17 @@ public class Main
 			else
 			{
 				coupon = request.session().attribute("coupon");
-				if(request.queryParams("zaklad") != null)
+				if(request.queryParams("bet") != null)
 				{
 					coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
-							Integer.parseInt(request.queryParams("zaklad"))));
+							Integer.parseInt(request.queryParams("bet"))));
 				}
 				request.session().attribute("coupon", coupon);
 			}
-			
+	
 			if(request.queryParams("delete") != null)
 				request.session().attribute("coupon", new Coupon());
+			
 			model.put("coupon", request.session().attribute("coupon"));
 			model.put("todayMatches", todayMatches);
 			model.put("tomorrowMatches", tomorrowMatches);
@@ -74,6 +74,55 @@ public class Main
 			return new ModelAndView(model, layout);
 
 		}, new VelocityTemplateEngine());
+		
+		
+		post("/", (request, response) ->
+		{
+			System.out.println("ggggggg");
+			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, String> errors = new HashMap<String, String>();
+			
+			model.put("user", request.session().attribute("user"));
+
+			Timestamp todayDate = new Timestamp(System.currentTimeMillis());
+			LocalDateTime date=LocalDateTime.now();
+			Timestamp tomorrowDate=Timestamp.valueOf(date.plusDays(1));
+			
+			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
+			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
+			
+			model.putAll(errors);
+			model.put("coupon", request.session().attribute("coupon"));
+			model.put("todayMatches", todayMatches);
+			model.put("tomorrowMatches", tomorrowMatches);
+			
+			if(((Coupon) request.session().attribute("coupon")).getBets().isEmpty())
+				errors.put("betsError", "Nie dodales zadnego zakladu");
+			
+			else if(((User) request.session().attribute("user")).getAccountBalance() - 
+					Double.parseDouble(request.queryParams("bid")) < 0)
+				errors.put("bidError", "Nie masz wystarczajaco duzo pieniedzy");
+
+			if(errors.isEmpty())
+			{
+				Coupon coupon = request.session().attribute("coupon");
+				coupon.setBid(Double.parseDouble(request.queryParams("bid")));
+			coupon.setPossibleWin(coupon.getBid());
+			for(TheWinnerOfAMatchBet temp: coupon.getBets())
+				coupon.setPossibleWin(coupon.getPossibleWin()*temp.getCourse());
+			
+			coupon.setPossibleWin(Math.round(coupon.getPossibleWin()*100)/100);
+			
+				model.put("template", "templates/sendedCoupon.vtl");
+			}
+			else
+			{				
+				model.put("template", "templates/index.vtl");
+			}
+			
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
 		
 		get("/register", (request, response) ->
 		{
@@ -189,7 +238,7 @@ public class Main
 				//request.session().attribute("user", loggedUser.getLogin());
 				request.session().attribute("user", loggedUser);
 				model.put("user", request.session().attribute("user"));
-				model.put("template", "templates/index.vtl"); // tutej welcome
+				model.put("template", "templates/index.vtl");
 			}
 
 			return new ModelAndView(model, layout);
@@ -323,8 +372,9 @@ public class Main
 		}, new VelocityTemplateEngine());
 		
 		
-		get("/sendedCoupon", (request, response) ->
+		/*get("/sendedCoupon", (request, response) ->
 		{
+			System.out.println(request.queryParams("bid"));
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
 			
@@ -335,19 +385,22 @@ public class Main
 			ArrayList<Match> todayMatches = new MatchDAO().getMatches(todayDate);
 			ArrayList<Match> tomorrowMatches = new MatchDAO().getMatches(tomorrowDate);
 			
+			if(request.queryParams("delete") != null)
+				request.session().attribute("coupon", new Coupon());
+			
 			Coupon coupon = request.session().attribute("coupon");
-			coupon.setBid(Double.parseDouble(request.queryParams("stawka")));
+			coupon.setBid(Double.parseDouble(request.queryParams("bid")));
 			coupon.setPossibleWin(coupon.getBid());
 			for(TheWinnerOfAMatchBet temp: coupon.getBets())
 				coupon.setPossibleWin(coupon.getPossibleWin()*temp.getCourse());
-			System.out.println(coupon.getPossibleWin());
+			
 			coupon.setPossibleWin(Math.round(coupon.getPossibleWin()*100)/100);
-			System.out.println(coupon.getPossibleWin());
+			
 			model.put("coupon", request.session().attribute("coupon"));
 			model.put("todayMatches", todayMatches);
 			model.put("tomorrowMatches", tomorrowMatches);
 			model.put("template", "templates/sendedCoupon.vtl");
 			return new ModelAndView(model, layout);
-		}, new VelocityTemplateEngine());
+		}, new VelocityTemplateEngine());*/
 	}
 }
