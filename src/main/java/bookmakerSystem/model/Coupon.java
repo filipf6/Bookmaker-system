@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Coupon
 {
 	private int id;
-	private int bid;
-	private int possibleWin;
+	private double bid;
+	private double possibleWin;
 	private Integer settlement;
 	private Timestamp settlementDate;
 	ArrayList<TheWinnerOfAMatchBet> bets = new ArrayList<TheWinnerOfAMatchBet>();
@@ -19,19 +19,19 @@ public class Coupon
 	{
 		this.id = id;
 	}
-	public int getBid()
+	public double getBid()
 	{
 		return bid;
 	}
-	public void setBid(int bid)
+	public void setBid(double bid)
 	{
 		this.bid = bid;
 	}
-	public int getPossibleWin()
+	public double getPossibleWin()
 	{
 		return possibleWin;
 	}
-	public void setPossibleWin(int possibleWin)
+	public void setPossibleWin(double possibleWin)
 	{
 		this.possibleWin = possibleWin;
 	}

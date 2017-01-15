@@ -1,45 +1,114 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="images/home.png" class="img-rounded" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                      	<a href="/">Regulamin</a>
+                    </li>
+                    <li>
+                    	<a href="/">Kontakt</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<div class="full">
 <form action='/register' method="post">
-		<div>
+
+<hr>
+
+   <div class="container">
+   <div class="row">
+   	<div class="col-md-3"></div>
+    <div class="col-md-6">
+    	<fieldset>
+		<div class="form-group">
 			<label for="login">Login</label>
-			<input id="login" name="login" type="text">
+			<input class="form-control" id="login" required name="login" type="text">
+			
 			#if($loginError)
+				<div class="alert alert-danger">
 				$loginError
+				</div>
 			#end
+		
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="password">Haslo</label>
-			<input id="password" name="password" type="password">
+			<input class="form-control" id="password" required name="password" type="password">
+			
 			#if($passwordError)
+				<div class="alert alert-danger">
 				$passwordError
+				</div>
 			#end
+			
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="password2">Powtorz haslo</label>
-			<input id="password2" name="password2" type="password">
+			<input class="form-control" id="password2" required name="password2" type="password">
+			
 			#if($repeatedPasswordError)
+				<div class="alert alert-danger">
 				$repeatedPasswordError
+				</div>
 			#end
+			
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="email">E-mail</label>
-			<input id="email" name="email" type="text">
+			<input class="form-control" id="email" required name="email" type="text">
+			
 			#if($emailError)
+				<div class="alert alert-danger">
 				$emailError
+				</div>
 			#end
+			
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="name">Imie</label>
-			<input id="name" name="name" type="text">
+			<input class="form-control" id="name" required name="name" type="text">
+			
 			#if($nameError)
+				<div class="alert alert-danger">
 				$nameError
+				</div>
 			#end
+		
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="surname">Nazwisko</label>
-			<input id="surname"  name="surname" type="text">
+			<input class="form-control"  id="surname" required name="surname" type="text">
+			
 			#if($surnameError)
+				<div class="alert alert-danger">
 				$surnameError
+				</div>
 			#end
 		</div>
-		<button type="submit" class="btn">Zarejestruj</button>
+		<div class="form-group">
+            <input class="btn btn-primary" type="submit" name="submit_reg" value="Zarejestruj!">
+        </div>
+	</div>
+	</fieldset>
+  </div>
+  </div>
+ </div>
 </form>
