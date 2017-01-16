@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import bookmakerSystem.DAO.CouponDAO;
 import bookmakerSystem.DAO.MatchDAO;
 import bookmakerSystem.DAO.UserDAO;
 import bookmakerSystem.DAO.TheWinnerOfAMatchBetDAO;
@@ -49,22 +50,29 @@ public class Main
 			if(request.session().attribute("user") != null)	
 			{
 				Coupon coupon;
-			
 
-					coupon = request.session().attribute("coupon");
-					if(request.queryParams("bet") != null)
-					{
-						coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
-								Integer.parseInt(request.queryParams("bet"))));
-					}
-					request.session().attribute("coupon", coupon);
-		
-				if(request.queryParams("delete") != null || request.queryParams("acceptCoupon") != null)
-					request.session().attribute("coupon", new Coupon());
+				coupon = request.session().attribute("coupon");
+				if(request.queryParams("bet") != null)
+				{
+					coupon.addBets(new TheWinnerOfAMatchBetDAO().getWinnerOfTheMatchBet(
+							Integer.parseInt(request.queryParams("bet"))));
+				}
 				
-				//if(request.queryParams("acceptCoupon") != null)
+				System.out.println(coupon.getUserId());
+				
+				if(request.queryParams("acceptCoupon") != null)
+				{
+					new CouponDAO().addCoupon(coupon);
+					coupon.getBets().clear();
 					
-				
+				}
+		
+				if(request.queryParams("delete") != null)
+				{
+					coupon.getBets().clear();
+				}
+					
+				request.session().attribute("coupon", coupon);				
 				model.put("coupon", request.session().attribute("coupon"));
 			}
 			model.put("todayMatches", todayMatches);
@@ -163,7 +171,7 @@ public class Main
 				if(new UserDAO().getByLogin(email) != null)
 					errors.put("emailError", "Uzytkownik o podanym adresie e-mail juz istnieje");
 				
-				else if(!email.matches("[a-zA-Z0-9_\\-]+@[a-zA-Z]+\\.[a-zA-Z]+"))
+				else if(!email.matches("[a-zA-Z0-9_\\-\\.]+@[a-zA-Z]+\\.[a-zA-Z]+"))
 					errors.put("emailError", "Podany adres e-mail jest niepoprawny");
 				
 				if (errors.isEmpty())
@@ -225,9 +233,7 @@ public class Main
 				model.put("todayMatches", todayMatches);
 				model.put("tomorrowMatches", tomorrowMatches);
 				model.put("loginError", "Login lub haslo niepoprawne");
-				model.put("template", "templates/index.vtl");
-				
-				
+				model.put("template", "templates/index.vtl");	
 			} 
 			else
 			{
@@ -357,23 +363,106 @@ public class Main
 		get("/userDataManagement", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("user", request.session().attribute("user"));
+			User loggedUser=request.session().attribute("user");
+			model.put("user", loggedUser);
+			
+			String change=request.queryParams("changeData");
+			model.put("changeData", null);
+			
+			if(change!=null)
+			{
+				if(change.equals("changePassword"))
+				{
+					model.put("changeData", "changePassword");
+					model.put("template", "templates/userDataManagement.vtl");
+				}
+				else if(change.equals("deleteAccount"))
+				{
+					model.put("changeData", "deleteAccount");
+					model.put("template", "templates/userDataManagement.vtl");
+				}
+				else if(change.equals("deleteAccountDefinitively"))
+				{
+					UserDAO userOperations=new UserDAO();
+					userOperations.deleteUser(loggedUser.getId());
+					request.session().removeAttribute("user");
+					model.put("user", request.session().attribute("user"));
+					model.put("template", "templates/index.vtl");
+				}	
+			}
+			else
+			{
+				model.put("template", "templates/userDataManagement.vtl");
+			}
 			
 			
-			model.put("template", "templates/userDataManagement.vtl");
+			
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
 		
-		get("/couponManagement", (request, response) ->
+		post("/userDataManagement", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, String> errors = new HashMap<String, String>();
+			User loggedUser=request.session().attribute("user");
+			String change=request.queryParams("changeData");
+			
+			
+			model.put("user", loggedUser);
+			
+			String newPassword=request.queryParams("newPassword");
+			String newPasswordRepeated=request.queryParams("newPasswordRepeated");
+			
+			
+			if(newPassword.length()<6)
+				errors.put("passwordError", "Podane haslo jest za krotkie - musi zawierac przynajmniej 6 znakow");
+			else if(!newPassword.matches("[a-zA-Z0-9]{6,}"))
+				errors.put("passwordError", "Haslo moze sie skladac z wielkich i malych liter oraz z cyfr od 0-9");
+			if(!newPassword.equals(newPasswordRepeated))
+				errors.put("repeatedPasswordError", "Podane hasla sie nie zgadzaja");
+			
+			
+			if(errors.isEmpty())
+			{
+				UserDAO userOperations=new UserDAO();
+				userOperations.setPassword(loggedUser.getId(), newPassword);
+				model.put("changeData", "changePasswordSuccess");
+				model.put("template", "templates/userDataManagement.vtl");
+			}
+			else
+			{
+				model.putAll(errors);
+				model.put("changeData", "changePassword");
+				model.put("template", "templates/userDataManagement.vtl");
+				
+			}
+			
+			
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		
+		
+		get("/terms", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("user", request.session().attribute("user"));
 			
 			
-			model.put("template", "templates/couponManagement.vtl");
+			model.put("template", "templates/terms.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
 		
+		
+		get("/contact", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", request.session().attribute("user"));
+			
+			
+			model.put("template", "templates/contact.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
 		
 		/*get("/sendedCoupon", (request, response) ->
 		{

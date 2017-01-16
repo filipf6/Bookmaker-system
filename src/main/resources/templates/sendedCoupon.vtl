@@ -1,57 +1,66 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">
-                    <img src="images/home.png" class="img-rounded" alt="">
-                </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-						<a href="/">Regulamin</a>
-                    </li>
-                    <li>
-                    	<a href="/">Kontakt</a>
-					</li>
-					
-                </ul>
-				<ul class="nav navbar-nav navbar-right">
-					
-						<li>
-							<a href="moneyManagement">Stan konta: $user.getAccountBalance()</a>
-						</li>
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-user">$user.getLogin()</span></a>
-					</li>
-					
-					<li>
-						<a href="logout"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a>
-					</li>
-				</ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-	 </nav>
-	 
-	  <!-- Page Content -->
-	<div class="full">
+<div class="full">
 	<div class="container">
 	  <hr>
 		<div class="row">
-			<div class="col-md-8">
-                <img class="img-responsive img-rounded" src="images/start.jpg" alt="">
+			<div class="col-md-8 text-center">
+                <div class="box">
+                    <div class="box-content">
+                        <h1 class="tag-title">Hity dnia!</h1>
+                        <hr />
+                        
+						 <table width="60%" class="table  table-bordered " id="dataTables-example">
+                                <thead>
+                                    <tr >
+                                    	<th>Godzina</th>
+                                        <th>Gospodarze</th>
+                                        <th>Goscie</th>
+                                        <th>1</th>
+										<th>x</th>
+										<th>2</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+	                                    <tr class="info" >
+	                                    	<td>21:00</td>
+	                                        <td>Leicester City</td>
+	                                        <td>West Ham United</td>
+	                                        <td>1.65</td>
+											<td>2.15</td>
+											<td>2.43</td>
+										</tr>	
+										
+										 <tr class="info" >
+	                                    	<td>18:00</td>
+	                                        <td>Real Madryt</td>
+	                                        <td>Juventus Turyn</td>
+	                                        <td>1.15</td>
+											<td>3.41</td>
+											<td>2.81</td>
+										</tr>
+
+										 <tr class="info" >
+	                                    	<td>20:00</td>
+	                                        <td>Atletico Madryt</td>
+	                                        <td>Bayern Monachium</td>
+	                                        <td>2.15</td>
+											<td>1.29</td>
+											<td>1.62</td>
+										</tr>
+								
+												
+                                </tbody>
+												
+								
+                            </table>
+						
+                        <br />
+                    </div>
+                </div>
             </div>
 			
-		<form action='/' method="get">
+		<form action='/' method="post">
 			<div class="col-md-4">
 				
 				 <div class="row">
@@ -97,8 +106,7 @@
 								
                             </table>
                             <!-- /.table-responsive -->
-							
-						<div class="row">
+                          <div class="row">
 							<div class="col-sm-12">
 							<form class="form-horizontal" role="form">
 								<div class="form-group">
@@ -126,25 +134,22 @@
 							</form>
 							
 						</div>
-							
-							<div clas="row">
-							
+
+							<div class="row">
 							<div class="form-group">
 								 <div class="col-md-6">
 								<input class="btn btn-primary center-block" type="submit" name="acceptCoupon" value="Potwierdz kupon"> 
 								</div>
-							</div>
 							
 				</form>
 				<form action='/' method="get">
-								 <div class="col-md-6">
+								  <div class="col-md-6">
 									<input class="btn btn-primary center-block" type="submit" name="deleteCoupon" value="Anuluj kupon">
 								</div>
 							</div>
 							</div>
-							</div>
                            
-                        
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -152,22 +157,21 @@
                 <!-- /.col-lg-12 -->
 				</div>
 			
-			</form>
+			
 			</div>
-		
+		</form>
 
 		
 		</div>
 		
 			<hr>
 		  <!-- Call to Action Well -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="well text-center">
-                    Rozgrywane mecze w najblizszych dniach
-                </div>
-            </div>
-            <!-- /.col-lg-12 -->
+         <div class="row">
+            
+                
+                  <h2> <p class="text-center"> Rozgrywane mecze w najblizszych dniach </p> </h2>
+               
+            
         </div>
         <!-- /.row -->
 
@@ -175,13 +179,15 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>dzien aktualny</h2>
+				<div class="full">
                  <div class="row">
+				 
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                        
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table  table-bordered " id="dataTables-example">
+                            <table width="100%" class="table  table-bordered  " id="dataTables-example">
                                 <thead>
                                     <tr class="active">
                                     	<th>Godzina</th>
@@ -205,7 +211,7 @@
 														 <form action='/' method="get">
 															<div class="btn-group" data-toggle="buttons">
 																<label class="btn btn-link">
-														  			<input onChange="this.form.submit();" name="zaklad" value=$bet.getId() type="radio"> $bet.getCourse()
+														  			<input onChange="this.form.submit();" name="bet" value=$bet.getId() type="radio"> $bet.getCourse()
 														  		</label>
 														  	</div>
 														</form>
@@ -228,6 +234,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
+			</div>
             </div>
                 
             </div>
