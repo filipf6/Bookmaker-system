@@ -145,21 +145,22 @@ public class Main
 			String name = request.queryParams("name");
 			String surname = request.queryParams("surname");
 			
-			System.out.println(login);
+			//System.out.println(login);
 			
 			if(login!=null)
 			{
-				if(new UserDAO().getByLogin(login) != null)
-					errors.put("loginError", "Podany login jest zajety");
-				else if(login.length()<4)
+				
+				if(login.length()<4)
 					errors.put("loginError", "Podany login jest za krotki - musi zawierac przynajmniej 4 znaki");
+				else if(new UserDAO().getByLogin(login) != null)
+					errors.put("loginError", "Podany login jest zajety");
 				else if(!login.matches("[a-zA-Z0-9]{4,}"))
 					errors.put("loginError", "Login moze sie skadac z wielkich i malych liter oraz z cyfr od 0-9");
-				else if(password.length()<6)
+				if(password.length()<6)
 					errors.put("passwordError", "Podane haslo jest za krotkie - musi zawierac przynajmniej 6 znakow");
 				else if(!password.matches("[a-zA-Z0-9]{6,}"))
 					errors.put("passwordError", "Haslo moze sie skadac z wielkich i malych liter oraz z cyfr od 0-9");
-				else if(!password.equals(repeatedPassword))
+				if(!password.equals(repeatedPassword))
 					errors.put("repeatedPasswordError", "Podane hasla sie nie zgadzaja");
 				
 				if(new UserDAO().getByLogin(email) != null)
@@ -354,10 +355,81 @@ public class Main
 		get("/userDataManagement", (request, response) ->
 		{
 			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("user", request.session().attribute("user"));
+			User loggedUser=request.session().attribute("user");
+			model.put("user", loggedUser);
+			
+			String change=request.queryParams("changeData");
+			model.put("changeData", null);
+			
+			if(change!=null)
+			{
+				if(change.equals("changePassword"))
+				{
+					model.put("changeData", "changePassword");
+					model.put("template", "templates/userDataManagement.vtl");
+				}
+				else if(change.equals("deleteAccount"))
+				{
+					model.put("changeData", "deleteAccount");
+					model.put("template", "templates/userDataManagement.vtl");
+				}
+				else if(change.equals("deleteAccountDefinitively"))
+				{
+					UserDAO userOperations=new UserDAO();
+					userOperations.deleteUser(loggedUser.getId());
+					request.session().removeAttribute("user");
+					model.put("user", request.session().attribute("user"));
+					model.put("template", "templates/index.vtl");
+				}	
+			}
+			else
+			{
+				model.put("template", "templates/userDataManagement.vtl");
+			}
 			
 			
-			model.put("template", "templates/userDataManagement.vtl");
+			
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		post("/userDataManagement", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			Map<String, String> errors = new HashMap<String, String>();
+			User loggedUser=request.session().attribute("user");
+			String change=request.queryParams("changeData");
+			
+			
+			model.put("user", loggedUser);
+			
+			String newPassword=request.queryParams("newPassword");
+			String newPasswordRepeated=request.queryParams("newPasswordRepeated");
+			
+			
+			if(newPassword.length()<6)
+				errors.put("passwordError", "Podane haslo jest za krotkie - musi zawierac przynajmniej 6 znakow");
+			else if(!newPassword.matches("[a-zA-Z0-9]{6,}"))
+				errors.put("passwordError", "Haslo moze sie skladac z wielkich i malych liter oraz z cyfr od 0-9");
+			if(!newPassword.equals(newPasswordRepeated))
+				errors.put("repeatedPasswordError", "Podane hasla sie nie zgadzaja");
+			
+			
+			if(errors.isEmpty())
+			{
+				UserDAO userOperations=new UserDAO();
+				userOperations.setPassword(loggedUser.getId(), newPassword);
+				model.put("changeData", "changePasswordSuccess");
+				model.put("template", "templates/userDataManagement.vtl");
+			}
+			else
+			{
+				model.putAll(errors);
+				model.put("changeData", "changePassword");
+				model.put("template", "templates/userDataManagement.vtl");
+				
+			}
+			
+			
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
 		
@@ -368,6 +440,27 @@ public class Main
 			
 			
 			model.put("template", "templates/couponManagement.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		get("/terms", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", request.session().attribute("user"));
+			
+			
+			model.put("template", "templates/terms.vtl");
+			return new ModelAndView(model, layout);
+		}, new VelocityTemplateEngine());
+		
+		
+		get("/contact", (request, response) ->
+		{
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", request.session().attribute("user"));
+			
+			
+			model.put("template", "templates/contact.vtl");
 			return new ModelAndView(model, layout);
 		}, new VelocityTemplateEngine());
 		

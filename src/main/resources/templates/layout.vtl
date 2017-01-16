@@ -1,5 +1,90 @@
 <!DOCTYPE html>
 <html class="full" lang="en">
+
+<style>
+
+.box {
+background-color:rgba(255,255,255,0.7);
+  transition:all 0.2s ease;
+  border:2px dashed #dadada;
+  
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-clip: padding-box;
+  
+  min-height:340px;
+}
+
+
+
+.box span.box-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.box .box-content {
+  padding: 16px;
+  border-radius: 0 0 2px 2px;
+  background-clip: padding-box;
+  box-sizing: border-box;
+}
+.box .box-content p {
+  color:#515c66;
+  text-transform:none;
+}
+
+.feature i{
+    font-size:70px;
+    color:#FFFFFF;
+    background:#1E825F;
+    padding:20px;
+    border-radius:50%;
+    border: solid 3px #1E825F;
+}
+
+.feature j{
+    font-size:70px;
+    color:#FFFFFF;
+    background:#4154FF;
+    padding:20px;
+    border-radius:50%;
+    border: solid 3px #4154FF;
+}
+
+.feature k{
+    font-size:70px;
+    color:#FFFFFF;
+    background:#C04C6B;
+    padding:20px;
+    border-radius:50%;
+    border: solid 3px #C04C6B;
+}
+
+.feature:hover {
+    background:rgba(255,255,255,0.7);
+    -webkit-transform: translate(0,1em);
+    -moz-transform: translate(0,1em);
+    -o-transform: translate(0,1em);
+    -ms-transform: translate(0,1em);
+    transform: translate(0,1em);
+}
+
+.feature, .feature i, .feature j, .feature k, .feature h3, .feature .title_border {
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
+.feature h3 {
+    font-size:130%;
+}
+
+}
+</style>
+
 <!-- Make sure the <html> tag is set to the .full CSS class. Change the background image in the full.css file. -->
 <head>
 
@@ -13,7 +98,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href='css/bootstrap.min.css' rel='stylesheet'>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
 
 
     <!-- Custom CSS -->
@@ -29,7 +116,6 @@
     <![endif]-->
 
 </head>
-
 <body>
 	#if($user) 
 	
@@ -51,10 +137,10 @@
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav">
 	                    <li>
-							<a href="/">Regulamin</a>
+							<a href="/terms">Regulamin</a>
 	                    </li>
 	                    <li>
-	                    	<a href="/">Kontakt</a>
+	                    	<a href="/contact">Kontakt</a>
 						</li>
 						
 	                </ul>
@@ -69,7 +155,16 @@
 							</li>
 							
 							<li>
-								<a href="couponManagement">Twoje kupony</span></a>
+<div class="dropdown">
+								  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+								  <span class="caret"></span></button>
+								  <ul class="dropdown-menu">
+							
+								    <li><a href="#">HTML</a></li>
+								    <li><a href="#">CSS</a></li>
+								    <li><a href="#">JavaScript</a></li>
+								  </ul>
+								</div>
 							</li>
 							
 							<li>
@@ -103,10 +198,10 @@
 	                        <a href="/register">Zarejestruj sie</a>
 	                    </li>
 	                    <li>
-	                      	<a href="/">Regulamin</a>
+	                      	<a href="/terms">Regulamin</a>
 	                    </li>
 	                    <li>
-	                    	<a href="/">Kontakt</a>
+	                    	<a href="/contact">Kontakt</a>
 	                  
 						</li>
 	                </ul>
