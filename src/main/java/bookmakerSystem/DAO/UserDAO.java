@@ -50,9 +50,19 @@ public class UserDAO
         DatabaseConnector.executeUpdate("INSERT INTO UZYTKOWNIK VALUES (vid_uzytkownika.nextval, 0, '"+name+"', '"+surname+"', '"+login+"', '"+password+"', '"+email+"',0)");
 	}
 	
+	public void deleteUser(int id)
+	{
+		DatabaseConnector.executeUpdate("DELETE FROM UZYTKOWNIK WHERE ID_UZYTKOWNIKA="+id);
+	}
+	
 	public void setAccountBalance(int id, double accountBalance)
 	{
 		DatabaseConnector.executeUpdate("UPDATE UZYTKOWNIK SET STAN_KONTA="+accountBalance+" WHERE ID_UZYTKOWNIKA="+id);
+	}
+	
+	public void setPassword(int id, String password)
+	{
+		DatabaseConnector.executeUpdate("UPDATE UZYTKOWNIK SET HASLO='"+password+"' WHERE ID_UZYTKOWNIKA="+id);
 	}
 	
 
